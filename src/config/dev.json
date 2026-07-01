@@ -1,0 +1,8 @@
+{
+  "base_url": "https://reqres.in/api",
+  "timeout": 30,
+  "environment": "DEV",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}
