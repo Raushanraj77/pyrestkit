@@ -1219,3 +1219,251 @@ One implementation.
 | Sprint 1 | Session Manager       | ✅      |
 | Sprint 1 | APIClient V1          | ✅      |
 #############################################
+
+🏗️ Now We Enter Sprint 2
+
+Sprint 1 was about Infrastructure.
+
+Sprint 2 is about Business Layer.
+
+This is where most frameworks start to look professional.
+
+Sprint 2 Roadmap
+Sprint 2
+
+├── Endpoint Management
+├── Business Clients
+├── Response Validators
+├── JSON Schema Validation
+├── Request Models
+└── Test Data Management
+First Question
+
+Where should endpoints live?
+
+Many frameworks do this:
+
+response = api_client.get("/users/2")
+Problems
+
+If tomorrow:
+
+/users
+
+becomes
+
+/v2/users
+
+You now have to search the entire project.
+
+Not good.
+
+Enterprise Approach
+
+We'll create an Endpoint Catalog.
+
+src/
+
+endpoints/
+
+    base_endpoints.py
+
+    user_endpoints.py
+
+    order_endpoints.py
+
+    payment_endpoints.py
+
+Notice something?
+
+Earlier we didn't even have an endpoints package.
+
+Now we do.
+
+This is how frameworks evolve.
+
+Why Separate Endpoints?
+
+Imagine this:
+
+Users
+
+Orders
+
+Payments
+
+Invoices
+
+Products
+
+Notifications
+
+Would you rather have:
+
+500 endpoint strings
+
+inside client classes?
+
+Or:
+
+UserEndpoints
+
+OrderEndpoints
+
+PaymentEndpoints
+
+Much cleaner.
+
+Example
+
+Instead of
+
+"/users"
+
+we'll use
+
+UserEndpoints.USERS
+
+Instead of
+
+f"/users/{id}"
+
+we'll use
+
+UserEndpoints.USER_BY_ID(user_id)
+
+Notice...
+
+No string concatenation inside tests.
+
+Another Improvement
+
+Instead of constants
+
+USERS = "/users"
+
+I'd rather write methods.
+
+Example
+
+class UserEndpoints:
+
+    @staticmethod
+    def list_users():
+        return "/users"
+
+    @staticmethod
+    def get_user(user_id):
+        return f"/users/{user_id}"
+
+Why?
+
+Because some endpoints become very dynamic.
+
+Example
+
+/users/{id}/orders/{orderId}/payments/{paymentId}
+
+Methods make that much easier to manage.
+
+Folder Structure
+src/
+
+endpoints/
+
+    __init__.py
+
+    user_endpoints.py
+First Business Client
+
+Now
+
+src/
+
+clients/
+
+    user_client.py
+
+Instead of
+
+api_client.get(...)
+
+the test becomes
+
+user_client.get_user(2)
+
+This is much closer to the language of the business.
+
+What UserClient Should Do
+
+Responsibilities:
+
+Create User
+
+Update User
+
+Delete User
+
+Get User
+
+List Users
+
+It should not:
+
+Create tokens.
+Validate responses.
+Know about retries.
+Manage sessions.
+
+It simply maps business operations to HTTP calls.
+
+Looking Ahead
+
+Once UserClient is ready, adding another client becomes almost mechanical.
+
+OrderClient
+
+PaymentClient
+
+InvoiceClient
+
+All of them will reuse the same APIClient.
+
+One Architecture Improvement I'd Like to Make
+
+Now that Sprint 1 is complete, I'd like to start introducing interfaces (using Python abstract base classes) where they add value.
+
+For example, every business client could implement a common contract for CRUD-style operations where appropriate.
+
+That gives us:
+
+Consistent APIs across clients.
+Easier mocking in tests.
+Better extensibility if different services expose similar resources.
+
+We won't force abstraction everywhere, but we'll introduce it when it makes the design cleaner.
+
+📌 Your Next Task (Sprint 2 - Module 1)
+
+Let's start small.
+
+Create a new package:
+src/endpoints/
+
+Inside it:
+
+__init__.py
+user_endpoints.py
+
+In user_endpoints.py, implement a UserEndpoints class with methods like:
+
+list_users()
+get_user(user_id)
+create_user()
+update_user(user_id)
+delete_user(user_id)
+
+Keep it focused on endpoint construction only—no HTTP logic.
+
+Once that's done, we'll build UserClient on top of it.
+
