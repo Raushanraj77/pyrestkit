@@ -1467,3 +1467,169 @@ Keep it focused on endpoint construction only—no HTTP logic.
 
 Once that's done, we'll build UserClient on top of it.
 
+>>>>>>>
+
+Sprint 2 - Module 3
+Pytest Fixtures & Dependency Injection
+
+This is one of the most important modules in the framework.
+
+Once we finish this module:
+
+No more creating ConfigManager() in every test
+No more creating SessionManager() in every test
+No more creating APIClient() in every test
+No more repetitive setup code
+
+Instead, pytest will automatically inject dependencies.
+
+Current Situation
+
+Every test looks like this:
+
+config = ConfigManager("dev")
+
+session_manager = SessionManager()
+
+api_client = APIClient(config, session_manager)
+
+user_client = UserClient(api_client)
+
+response = user_client.get_user(user_id=2)
+
+This is okay for 10 tests.
+
+Imagine writing 5,000 tests.
+
+Enterprise Solution
+
+Our tests should look like this:
+
+def test_get_user(user_client, requests_mock):
+
+    requests_mock.get(
+        "https://reqres.in/api/users/2",
+        json={"id": 2},
+        status_code=200,
+    )
+
+    response = user_client.get_user(user_id=2)
+
+    assert response.status_code == 200
+
+That's it.
+
+Notice:
+
+conftest.py
+
+This file is automatically discovered by pytest.
+
+No imports required.
+
+Dependency Flow
+ConfigManager
+      │
+      ▼
+SessionManager
+      │
+      ▼
+APIClient
+      │
+      ▼
+UserClient
+      │
+      ▼
+Tests
+
+Exactly like dependency injection frameworks.
+
+Pytest works like this:
+
+Create Session
+
+↓
+
+yield
+
+↓
+
+Run Tests
+
+↓
+
+Cleanup
+
+This ensures the session is closed automatically after all tests finish.
+
+Fixture Scope
+
+This is something every Senior SDET should know.
+
+Scope	Lifetime
+function	Every test
+class	Every test class
+module	Every test module
+package	Every package (pytest 7+)
+session	Entire execution
+
+For us:
+
+Fixture	Scope
+Config	session
+SessionManager	session
+APIClient	session
+UserClient	function
+Why is UserClient function?
+
+Because business clients may later contain:
+
+request IDs
+temporary state
+authentication context
+test-specific overrides
+
+Creating a fresh client for each test keeps tests isolated.
+
+Architecture Review
+
+Let's evaluate this change like a pull request.
+
+Before
+Test
+
+↓
+
+Config
+
+↓
+
+Session
+
+↓
+
+API
+
+↓
+
+User
+
+Repeated hundreds of times.
+
+After
+Fixtures
+
+↓
+
+Dependency Injection
+
+↓
+
+Tests
+
+Tests focus only on business logic.
+
+Future Benefits
+
+When we add authentication, we'll only change one fixture.
+

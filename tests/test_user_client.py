@@ -1,22 +1,16 @@
 from src.clients.user_client import UserClient
-from src.config.config import ConfigManager
-from src.core.api_client import APIClient
-from src.core.session_manager import SessionManager
 
 
-def test_get_user(requests_mock):
-    config = ConfigManager("dev")
-    session_manager = SessionManager()
-
-    api_client = APIClient(config, session_manager)
-    user_client = UserClient(api_client)
-
+def test_get_user(
+    user_client: UserClient,
+    requests_mock,
+):
     requests_mock.get(
         "https://reqres.in/api/users/2",
         json={
             "id": 2,
             "first_name": "Janet",
-            "last_name": "Weaver"
+            "last_name": "Weaver",
         },
         status_code=200,
     )
@@ -26,21 +20,16 @@ def test_get_user(requests_mock):
     assert response.status_code == 200
     assert response.json()["id"] == 2
 
-    session_manager.close()
 
-
-def test_list_users(requests_mock):
-    config = ConfigManager("dev")
-    session_manager = SessionManager()
-
-    api_client = APIClient(config, session_manager)
-    user_client = UserClient(api_client)
-
+def test_list_users(
+    user_client: UserClient,
+    requests_mock,
+):
     requests_mock.get(
         "https://reqres.in/api/users",
         json={
             "page": 1,
-            "data": []
+            "data": [],
         },
         status_code=200,
     )
@@ -48,20 +37,16 @@ def test_list_users(requests_mock):
     response = user_client.list_users()
 
     assert response.status_code == 200
+    assert response.json()["page"] == 1
 
-    session_manager.close()
 
-
-def test_create_user(requests_mock):
-    config = ConfigManager("dev")
-    session_manager = SessionManager()
-
-    api_client = APIClient(config, session_manager)
-    user_client = UserClient(api_client)
-
+def test_create_user(
+    user_client: UserClient,
+    requests_mock,
+):
     payload = {
         "name": "Raushan",
-        "job": "SDET"
+        "job": "SDET",
     }
 
     requests_mock.post(
@@ -69,7 +54,7 @@ def test_create_user(requests_mock):
         json={
             "id": "101",
             "name": "Raushan",
-            "job": "SDET"
+            "job": "SDET",
         },
         status_code=201,
     )
@@ -78,24 +63,22 @@ def test_create_user(requests_mock):
 
     assert response.status_code == 201
     assert response.json()["name"] == "Raushan"
+    assert response.json()["job"] == "SDET"
 
-    session_manager.close()
 
-
-def test_update_user(requests_mock):
-    config = ConfigManager("dev")
-    session_manager = SessionManager()
-
-    api_client = APIClient(config, session_manager)
-    user_client = UserClient(api_client)
-
+def test_update_user(
+    user_client: UserClient,
+    requests_mock,
+):
     payload = {
-        "job": "Senior SDET"
+        "job": "Senior SDET",
     }
 
     requests_mock.put(
         "https://reqres.in/api/users/2",
-        json=payload,
+        json={
+            "job": "Senior SDET",
+        },
         status_code=200,
     )
 
@@ -105,17 +88,13 @@ def test_update_user(requests_mock):
     )
 
     assert response.status_code == 200
+    assert response.json()["job"] == "Senior SDET"
 
-    session_manager.close()
 
-
-def test_delete_user(requests_mock):
-    config = ConfigManager("dev")
-    session_manager = SessionManager()
-
-    api_client = APIClient(config, session_manager)
-    user_client = UserClient(api_client)
-
+def test_delete_user(
+    user_client: UserClient,
+    requests_mock,
+):
     requests_mock.delete(
         "https://reqres.in/api/users/2",
         status_code=204,
@@ -124,5 +103,3 @@ def test_delete_user(requests_mock):
     response = user_client.delete_user(user_id=2)
 
     assert response.status_code == 204
-
-    session_manager.close()

@@ -4,8 +4,16 @@ from src.core.session_manager import SessionManager
 
 
 def test_session_creation():
-    manager = SessionManager()
+    session_manager = SessionManager()
 
-    assert isinstance(manager.session, requests.Session)
+    assert isinstance(session_manager.session, requests.Session)
 
-    manager.close()
+    session_manager.close()
+
+
+def test_close_session():
+    session_manager = SessionManager()
+
+    session_manager.close()
+
+    #assert session_manager.session is None
