@@ -14,12 +14,13 @@ def config() -> ConfigManager:
 
 
 @pytest.fixture(scope="session")
-def session_manager() -> Generator[SessionManager, None, None]:
+def session_manager() -> Generator[SessionManager]:
     manager = SessionManager()
 
-    yield manager
-
-    manager.close()
+    try:
+        yield manager
+    finally:
+        manager.close()
 
 
 @pytest.fixture(scope="session")

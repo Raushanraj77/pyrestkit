@@ -12,26 +12,23 @@ from src.models.request.update_user_request import UpdateUserRequest
 class UserClient(BaseClient):
     """
     Business client responsible for User APIs.
-    Notice how UserClient no longer knows anything about APIClient. It simply delegates to the inherited methods.
-    
+
+    This client delegates HTTP operations to BaseClient.
+
     """
 
     def __init__(self, api_client: APIClient) -> None:
         super().__init__(api_client)
 
     def list_users(self) -> Response:
-        return self.get(
-            UserEndpoints.list_users()
-        )
+        return self.get(UserEndpoints.list_users())
 
     def get_user(
         self,
         user_id: int,
     ) -> Response:
 
-        return self.get(
-            UserEndpoints.get_user(user_id)
-        )
+        return self.get(UserEndpoints.get_user(user_id))
 
     def create_user(
         self,
@@ -59,6 +56,4 @@ class UserClient(BaseClient):
         user_id: int,
     ) -> Response:
 
-        return self.delete(
-            UserEndpoints.delete_user(user_id)
-        )
+        return self.delete(UserEndpoints.delete_user(user_id))

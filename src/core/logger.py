@@ -26,9 +26,7 @@ class FrameworkLogger:
             cls._logger = logger
             return logger
 
-        formatter = logging.Formatter(
-            "%(asctime)s | %(levelname)-8s | %(message)s"
-        )
+        formatter = logging.Formatter("%(asctime)s | %(levelname)-8s | %(message)s")
 
         file_handler = logging.FileHandler(log_file)
         file_handler.setFormatter(formatter)

@@ -1,8 +1,9 @@
+from typing import Any
+
 from requests import Response
 
 
 class ResponseValidator:
-
     def __init__(self, response: Response):
         self.response = response
 
@@ -14,11 +15,19 @@ class ResponseValidator:
         assert key in self.response.json()
         return self
 
+    # def field_equals(
+    #     self,
+    #     key: str,
+    #     value,
+    # ) -> "ResponseValidator":
+
+    #     assert self.response.json()[key] == value
+    #     return self
+
     def field_equals(
         self,
         key: str,
-        value,
+        value: Any,
     ) -> "ResponseValidator":
-
         assert self.response.json()[key] == value
         return self

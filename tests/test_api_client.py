@@ -1,10 +1,12 @@
+from typing import Any
+
 from src.core.api_client import APIClient
 
 
 def test_get_request(
     api_client: APIClient,
-    requests_mock,
-):
+    requests_mock: Any,
+) -> None:
     requests_mock.get(
         "https://reqres.in/api/users/2",
         json={

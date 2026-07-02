@@ -1,3 +1,5 @@
+from typing import Any
+
 from src.clients.user_client import UserClient
 from src.models.request.create_user_request import CreateUserRequest
 from src.models.request.update_user_request import UpdateUserRequest
@@ -5,8 +7,8 @@ from src.models.request.update_user_request import UpdateUserRequest
 
 def test_get_user(
     user_client: UserClient,
-    requests_mock,
-):
+    requests_mock: Any,
+) -> None:
     requests_mock.get(
         "https://reqres.in/api/users/2",
         json={
@@ -27,8 +29,8 @@ def test_get_user(
 
 def test_list_users(
     user_client: UserClient,
-    requests_mock,
-):
+    requests_mock: Any,
+) -> None:
     requests_mock.get(
         "https://reqres.in/api/users",
         json={
@@ -67,8 +69,8 @@ def test_list_users(
 
 def test_create_user(
     user_client: UserClient,
-    requests_mock,
-):
+    requests_mock: Any,
+) -> None:
     request = CreateUserRequest(
         name="Raushan",
         job="SDET",
@@ -99,8 +101,8 @@ def test_create_user(
 
 def test_update_user(
     user_client: UserClient,
-    requests_mock,
-):
+    requests_mock: Any,
+) -> None:
     request = UpdateUserRequest(
         job="Senior SDET",
     )
@@ -129,8 +131,8 @@ def test_update_user(
 
 def test_delete_user(
     user_client: UserClient,
-    requests_mock,
-):
+    requests_mock: Any,
+) -> None:
     requests_mock.delete(
         "https://reqres.in/api/users/2",
         status_code=204,

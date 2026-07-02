@@ -1,7 +1,7 @@
 from src.config.config import ConfigManager
 
 
-def test_load_dev_config():
+def test_load_dev_config() -> None:
     config = ConfigManager("dev")
 
     assert config.environment_name == "DEV"

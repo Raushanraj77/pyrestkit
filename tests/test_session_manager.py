@@ -3,7 +3,7 @@ import requests
 from src.core.session_manager import SessionManager
 
 
-def test_session_creation():
+def test_session_creation() -> None:
     session_manager = SessionManager()
 
     assert isinstance(session_manager.session, requests.Session)
@@ -11,9 +11,9 @@ def test_session_creation():
     session_manager.close()
 
 
-def test_close_session():
+def test_close_session() -> None:
     session_manager = SessionManager()
 
     session_manager.close()
 
-    #assert session_manager.session is None
+    # assert session_manager.session is None

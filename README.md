@@ -1742,4 +1742,77 @@ ResponseValidator(response)\
 
 or even stronger validation using response models and JSON Schema where appropriate.
 
+>>>>>>>>
+Sprint 2 – Module 5
+Objective
+
+Refactor the client layer to remove duplicated logic and prepare the framework for:
+
+Authentication
+Retry
+Response Mapping
+Request/Response Logging
+Correlation IDs
+Tracing
+Future OrderClient/PaymentClient implementations
+
+Why this design?
+
+This module establishes reusable building blocks that every future API client will share. Instead of duplicating HTTP delegation in each client, BaseClient centralizes it. ResponseMapper and response models prepare us for typed responses, and ResponseValidator provides a fluent validation style that we'll extend in later sprints.
+
+>>>>>>>>>>>>>>>>>>>>>>>
+Sprint 1 ✅
+--------------------------------
+✔ Project Setup
+✔ Config
+✔ Logger
+✔ Session Manager
+✔ API Client
+✔ Endpoint Catalog
+
+Sprint 2 ✅
+--------------------------------
+✔ User Client
+✔ Dependency Injection
+✔ Fixtures
+✔ Request Models
+✔ Base Client
+✔ Response Models
+✔ Response Mapper
+✔ Response Validator
+
+>>>>>>>>>>>>>>>>
+Sprint 3 — Authentication Layer
+
+This is one of the biggest differentiators between a basic framework and a professional one.
+
+Almost every enterprise API requires authentication.
+
+Examples:
+
+OAuth2
+Bearer Token
+JWT
+API Key
+Basic Auth
+Mutual TLS
+AWS Signature
+
+A good framework should support all of them without changing test code.
+
+Design Patterns We'll Introduce
+
+During Sprint 3 you'll learn:
+
+✅ Strategy Pattern
+
+✅ Singleton
+
+✅ Factory
+
+✅ Dependency Injection
+
+✅ Thread-safe Singleton
+
+These are frequently discussed in Senior SDET interviews.
 
