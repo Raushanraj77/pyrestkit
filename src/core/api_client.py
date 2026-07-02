@@ -4,6 +4,7 @@ from typing import Any
 
 import requests
 
+from src.auth.auth_strategy import AuthenticationStrategy
 from src.config.config import ConfigManager
 from src.core.logger import FrameworkLogger
 from src.core.session_manager import SessionManager
@@ -18,9 +19,11 @@ class APIClient:
         self,
         config: ConfigManager,
         session_manager: SessionManager,
+        auth_strategy: AuthenticationStrategy | None = None,
     ) -> None:
         self._config = config
         self._session = session_manager.session
+        self._auth_strategy = auth_strategy
         self._logger = FrameworkLogger.get_logger()
 
     def _send_request(
@@ -31,8 +34,20 @@ class APIClient:
     ) -> requests.Response:
         url = f"{self._config.base_url}{endpoint}"
 
-        kwargs.setdefault("timeout", self._config.timeout)
-        kwargs.setdefault("headers", self._config.headers)
+        headers = self._config.headers.copy()
+
+        if self._auth_strategy is not None:
+            headers.update(self._auth_strategy.get_headers())
+
+        headers.update(kwargs.pop("headers", {}))
+
+        timeout = kwargs.pop(
+            "timeout",
+            self._config.timeout,
+        )
+
+        kwargs["headers"] = headers
+        kwargs["timeout"] = timeout
 
         self._logger.info("%s %s", method.upper(), url)
 
