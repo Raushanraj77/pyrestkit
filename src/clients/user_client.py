@@ -1,69 +1,57 @@
-from __future__ import annotations
-
-from typing import Any
+from dataclasses import asdict
 
 from requests import Response
 
 from src.core.api_client import APIClient
 from src.endpoints.user_endpoints import UserEndpoints
+from src.models.request.create_user_request import CreateUserRequest
+from src.models.request.update_user_request import UpdateUserRequest
 
 
 class UserClient:
-    """
-    Business client for User APIs.
 
-    This class contains only business operations.
-    It delegates all HTTP communication to APIClient.
-    """
-
-    def __init__(self, api_client: APIClient) -> None:
+    def __init__(self, api_client: APIClient):
         self._api_client = api_client
 
-    def list_users(self, **kwargs: Any) -> Response:
+    def list_users(self) -> Response:
         return self._api_client.get(
-            UserEndpoints.list_users(),
-            **kwargs,
+            UserEndpoints.list_users()
         )
 
     def get_user(
         self,
         user_id: int,
-        **kwargs: Any,
     ) -> Response:
         return self._api_client.get(
-            UserEndpoints.get_user(user_id=user_id),
-            **kwargs,
+            UserEndpoints.get_user(user_id)
         )
 
     def create_user(
         self,
-        payload: dict[str, Any],
-        **kwargs: Any,
+        request: CreateUserRequest,
     ) -> Response:
+
         return self._api_client.post(
             UserEndpoints.create_user(),
-            json=payload,
-            **kwargs,
+            json=asdict(request)
         )
 
     def update_user(
         self,
         user_id: int,
-        payload: dict[str, Any],
-        **kwargs: Any,
+        request: UpdateUserRequest,
     ) -> Response:
+
         return self._api_client.put(
-            UserEndpoints.update_user(user_id=user_id),
-            json=payload,
-            **kwargs,
+            UserEndpoints.update_user(user_id),
+            json=asdict(request)
         )
 
     def delete_user(
         self,
         user_id: int,
-        **kwargs: Any,
     ) -> Response:
+
         return self._api_client.delete(
-            UserEndpoints.delete_user(user_id=user_id),
-            **kwargs,
+            UserEndpoints.delete_user(user_id)
         )

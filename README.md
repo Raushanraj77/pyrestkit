@@ -1633,3 +1633,113 @@ Future Benefits
 
 When we add authentication, we'll only change one fixture.
 
+>>>>>>>>>>>>
+
+Sprint 2 - Module 4
+
+Now we move to something that many automation frameworks never implement properly.
+
+Request Models
+Current
+payload = {
+    "name": "Raushan",
+    "job": "SDET"
+}
+
+response = user_client.create_user(payload)
+
+Works...
+
+But after 300 APIs?
+
+payload = {
+    "customerName": "...",
+    "customerId": "...",
+    "customerType": "...",
+    ...
+}
+
+Nobody remembers all keys.
+
+Enterprise Approach
+
+We'll use dataclasses.
+
+Example:
+
+from dataclasses import dataclass
+
+
+@dataclass(slots=True)
+class CreateUserRequest:
+    name: str
+    job: str
+
+Now:
+
+request = CreateUserRequest(
+    name="Raushan",
+    job="SDET"
+)
+
+response = user_client.create_user(request)
+
+Much cleaner.
+
+Why Dataclasses?
+
+Benefits:
+
+IDE autocomplete
+Type checking
+Readable code
+Easier refactoring
+Less typo-prone
+Easier maintenance
+Then...
+
+We'll teach APIClient to automatically convert the dataclass into JSON.
+
+So this:
+
+CreateUserRequest(...)
+
+becomes
+
+{
+  "name": "...",
+  "job": "..."
+}
+
+without the test needing to know how.
+
+Then Response Models
+
+Instead of:
+
+response.json()["name"]
+
+you'll write:
+
+user.name
+
+This is exactly how many SDKs and enterprise frameworks work.
+
+Then Validation
+
+Instead of:
+
+assert response.status_code == 200
+assert response.json()["id"] == 2
+assert response.json()["name"] == "Raushan"
+
+you'll be able to write:
+
+ResponseValidator(response)\
+    .status_code(200)\
+    .has_key("id")\
+    .field("name").equals("Raushan")
+
+or even stronger validation using response models and JSON Schema where appropriate.
+
+
