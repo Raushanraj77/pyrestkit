@@ -1,9 +1,15 @@
 from src.auth.bearer_auth import BearerAuth
+from src.auth.token_manager import TokenManager
+from tests.fake_token_provider import FakeTokenProvider
 
 
 def test_bearer_auth_headers() -> None:
-    auth = BearerAuth("my-token")
+    provider = FakeTokenProvider()
+
+    manager = TokenManager(provider)
+
+    auth = BearerAuth(manager)
 
     assert auth.get_headers() == {
-        "Authorization": "Bearer my-token",
+        "Authorization": "Bearer fake-token",
     }
