@@ -4,7 +4,7 @@ from typing import Any
 
 import requests
 
-from src.auth.auth_strategy import AuthenticationStrategy
+from src.auth.authentication_manager import AuthenticationManager
 from src.config.config import ConfigManager
 from src.core.logger import FrameworkLogger
 from src.core.session_manager import SessionManager
@@ -19,11 +19,11 @@ class APIClient:
         self,
         config: ConfigManager,
         session_manager: SessionManager,
-        auth_strategy: AuthenticationStrategy | None = None,
+        auth_manager: AuthenticationManager | None = None,
     ) -> None:
         self._config = config
         self._session = session_manager.session
-        self._auth_strategy = auth_strategy
+        self._auth_manager = auth_manager
         self._logger = FrameworkLogger.get_logger()
 
     def _send_request(
@@ -32,33 +32,51 @@ class APIClient:
         endpoint: str,
         **kwargs: Any,
     ) -> requests.Response:
-        url = f"{self._config.base_url}{endpoint}"
+
+        url = "/".join(
+            [
+                self._config.base_url.rstrip("/"),
+                endpoint.lstrip("/"),
+            ]
+        )
 
         headers = self._config.headers.copy()
 
-        if self._auth_strategy is not None:
-            headers.update(self._auth_strategy.get_headers())
+        if self._auth_manager is not None:
+            headers.update(self._auth_manager.get_headers())
 
-        headers.update(kwargs.pop("headers", {}))
+        custom_headers = kwargs.pop(
+            "headers",
+            {},
+        )
+
+        headers.update(custom_headers)
 
         timeout = kwargs.pop(
             "timeout",
             self._config.timeout,
         )
 
-        kwargs["headers"] = headers
-        kwargs["timeout"] = timeout
+        request_kwargs = {
+            "headers": headers,
+            "timeout": timeout,
+            **kwargs,
+        }
 
-        self._logger.info("%s %s", method.upper(), url)
+        self._logger.info(
+            "Request: %s %s",
+            method.upper(),
+            url,
+        )
 
         response = self._session.request(
             method=method,
             url=url,
-            **kwargs,
+            **request_kwargs,
         )
 
         self._logger.info(
-            "Status Code: %s | Response Time: %.2f ms",
+            "Response: %s | %.2f ms",
             response.status_code,
             response.elapsed.total_seconds() * 1000,
         )
