@@ -9,6 +9,7 @@ from src.config.config import ConfigManager
 from src.core.request_builder import RequestBuilder
 from src.core.request_executor import RequestExecutor
 from src.core.session_manager import SessionManager
+from src.hooks.hook_manager import HookManager
 
 
 class APIClient:
@@ -21,6 +22,7 @@ class APIClient:
         config: ConfigManager,
         session_manager: SessionManager,
         auth_strategy: AuthenticationStrategy | None = None,
+        hook_manager: HookManager | None = None,
     ) -> None:
         self._builder = RequestBuilder(
             config=config,
@@ -29,6 +31,7 @@ class APIClient:
 
         self._executor = RequestExecutor(
             session_manager=session_manager,
+            hook_manager=hook_manager,
         )
 
     def _send_request(

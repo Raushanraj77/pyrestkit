@@ -4,47 +4,36 @@ from typing import Any
 
 import requests
 
-from src.hooks.request_hook import RequestHook
-from src.hooks.response_hook import ResponseHook
+from src.hooks.hook import Hook
 
 
 class HookManager:
     """
-    Registers and executes request and response hooks.
+    Executes registered hooks.
     """
 
-    def __init__(self) -> None:
-        self._request_hooks: list[RequestHook] = []
-        self._response_hooks: list[ResponseHook] = []
-
-    def add_request_hook(
+    def __init__(
         self,
-        hook: RequestHook,
+        hooks: list[Hook] | None = None,
     ) -> None:
-        self._request_hooks.append(hook)
+        self._hooks = hooks or []
 
-    def add_response_hook(
-        self,
-        hook: ResponseHook,
-    ) -> None:
-        self._response_hooks.append(hook)
-
-    def execute_before_request(
+    def before_request(
         self,
         method: str,
         url: str,
         kwargs: dict[str, Any],
     ) -> None:
-        for hook in self._request_hooks:
+        for hook in self._hooks:
             hook.before_request(
                 method,
                 url,
                 kwargs,
             )
 
-    def execute_after_response(
+    def after_response(
         self,
         response: requests.Response,
     ) -> None:
-        for hook in self._response_hooks:
+        for hook in self._hooks:
             hook.after_response(response)

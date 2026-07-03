@@ -1,18 +1,27 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from typing import Any
 
-from src.pipeline.request_context import RequestContext
+import requests
 
 
-class Hook(ABC):
+class Hook:
     """
-    Base class for all framework hooks.
+    Base class for framework hooks.
+
+    Override only the callbacks you need.
     """
 
-    @abstractmethod
-    def execute(self, context: RequestContext) -> None:
-        """
-        Execute the hook.
-        """
-        raise NotImplementedError
+    def before_request(
+        self,
+        method: str,
+        url: str,
+        kwargs: dict[str, Any],
+    ) -> None:
+        return
+
+    def after_response(
+        self,
+        response: requests.Response,
+    ) -> None:
+        return

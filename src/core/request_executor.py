@@ -6,6 +6,7 @@ import requests
 
 from src.core.logger import FrameworkLogger
 from src.core.session_manager import SessionManager
+from src.hooks.hook_manager import HookManager
 
 
 class RequestExecutor:
@@ -16,9 +17,11 @@ class RequestExecutor:
     def __init__(
         self,
         session_manager: SessionManager,
+        hook_manager: HookManager | None = None,
     ) -> None:
         self._session = session_manager.session
         self._logger = FrameworkLogger.get_logger()
+        self._hook_manager = hook_manager or HookManager()
 
     def execute(
         self,
