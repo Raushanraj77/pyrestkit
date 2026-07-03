@@ -6,8 +6,8 @@ import requests
 
 from src.auth.auth_strategy import AuthenticationStrategy
 from src.config.config import ConfigManager
-from src.core.logger import FrameworkLogger
 from src.core.request_builder import RequestBuilder
+from src.core.request_executor import RequestExecutor
 from src.core.session_manager import SessionManager
 
 
@@ -22,11 +22,13 @@ class APIClient:
         session_manager: SessionManager,
         auth_strategy: AuthenticationStrategy | None = None,
     ) -> None:
-        self._session = session_manager.session
-        self._logger = FrameworkLogger.get_logger()
-        self._request_builder = RequestBuilder(
+        self._builder = RequestBuilder(
             config=config,
             auth_strategy=auth_strategy,
+        )
+
+        self._executor = RequestExecutor(
+            session_manager=session_manager,
         )
 
     def _send_request(
@@ -35,26 +37,16 @@ class APIClient:
         endpoint: str,
         **kwargs: Any,
     ) -> requests.Response:
-        url, kwargs = self._request_builder.build(
+        url, kwargs = self._builder.build(
             endpoint,
             **kwargs,
         )
 
-        self._logger.info("%s %s", method.upper(), url)
-
-        response = self._session.request(
+        return self._executor.execute(
             method=method,
             url=url,
             **kwargs,
         )
-
-        self._logger.info(
-            "Status Code: %s | Response Time: %.2f ms",
-            response.status_code,
-            response.elapsed.total_seconds() * 1000,
-        )
-
-        return response
 
     def get(
         self,
