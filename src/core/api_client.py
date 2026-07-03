@@ -7,9 +7,8 @@ import requests
 from src.auth.auth_strategy import AuthenticationStrategy
 from src.config.config import ConfigManager
 from src.core.logger import FrameworkLogger
+from src.core.request_builder import RequestBuilder
 from src.core.session_manager import SessionManager
-from src.retry.retry_handler import RetryHandler
-from src.retry.retry_policy import RetryPolicy
 
 
 class APIClient:
@@ -22,32 +21,13 @@ class APIClient:
         config: ConfigManager,
         session_manager: SessionManager,
         auth_strategy: AuthenticationStrategy | None = None,
-        retry_policy: RetryPolicy | None = None,
     ) -> None:
-        self._config = config
         self._session = session_manager.session
-        self._auth_strategy = auth_strategy
         self._logger = FrameworkLogger.get_logger()
-
-        self._retry_handler = RetryHandler(
-            retry_policy or RetryPolicy(),
+        self._request_builder = RequestBuilder(
+            config=config,
+            auth_strategy=auth_strategy,
         )
-
-    def _build_headers(
-        self,
-        custom_headers: dict[str, str] | None,
-    ) -> dict[str, str]:
-        headers = self._config.headers.copy()
-
-        if self._auth_strategy is not None:
-            headers.update(
-                self._auth_strategy.get_headers(),
-            )
-
-        if custom_headers:
-            headers.update(custom_headers)
-
-        return headers
 
     def _send_request(
         self,
@@ -55,24 +35,14 @@ class APIClient:
         endpoint: str,
         **kwargs: Any,
     ) -> requests.Response:
-        url = f"{self._config.base_url}{endpoint}"
-
-        headers = self._build_headers(
-            kwargs.pop("headers", None),
+        url, kwargs = self._request_builder.build(
+            endpoint,
+            **kwargs,
         )
-
-        timeout = kwargs.pop(
-            "timeout",
-            self._config.timeout,
-        )
-
-        kwargs["headers"] = headers
-        kwargs["timeout"] = timeout
 
         self._logger.info("%s %s", method.upper(), url)
 
-        response = self._retry_handler.execute(
-            self._session.request,
+        response = self._session.request(
             method=method,
             url=url,
             **kwargs,
