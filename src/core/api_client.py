@@ -30,6 +30,7 @@ class APIClient:
         )
 
         self._executor = RequestExecutor(
+            config=config,
             session_manager=session_manager,
             hook_manager=hook_manager,
         )

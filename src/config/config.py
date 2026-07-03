@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 from pathlib import Path
 from typing import Any, cast
@@ -32,32 +34,64 @@ class ConfigManager:
     immediately with a clear error message.
     """
 
-    def __init__(self, environment: str = "dev"):
+    def __init__(
+        self,
+        environment: str = "dev",
+    ) -> None:
         self.environment = environment.lower()
 
         config_file = Path(__file__).parent / f"{self.environment}.json"
 
         if not config_file.exists():
             raise ConfigurationException(
-                f"Configuration file '{self.environment}' not found."
+                f"Configuration file '{self.environment}' not found.",
             )
 
-        with open(config_file) as file:
-            # self.config = json.load(file)
+        with config_file.open(
+            encoding="utf-8",
+        ) as file:
             self.config: dict[str, Any] = json.load(file)
 
     @property
     def base_url(self) -> str:
-        return cast(str, self.config["base_url"])
+        return cast(
+            str,
+            self.config["base_url"],
+        )
 
     @property
     def timeout(self) -> int:
-        return cast(int, self.config["timeout"])
+        return cast(
+            int,
+            self.config.get(
+                "timeout",
+                30,
+            ),
+        )
 
     @property
     def headers(self) -> dict[str, str]:
-        return cast(dict[str, str], self.config["headers"])
+        return cast(
+            dict[str, str],
+            self.config.get(
+                "headers",
+                {},
+            ),
+        )
+
+    @property
+    def auto_raise_exceptions(self) -> bool:
+        return cast(
+            bool,
+            self.config.get(
+                "auto_raise_exceptions",
+                True,
+            ),
+        )
 
     @property
     def environment_name(self) -> str:
-        return cast(str, self.config["environment"])
+        return cast(
+            str,
+            self.config["environment"],
+        )
