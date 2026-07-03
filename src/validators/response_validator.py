@@ -2,6 +2,8 @@ from typing import Any
 
 from requests import Response
 
+from src.exceptions.validation_exception import ValidationException
+
 
 class ResponseValidator:
     def __init__(self, response: Response):
@@ -9,6 +11,12 @@ class ResponseValidator:
 
     def status_code(self, expected: int) -> "ResponseValidator":
         assert self.response.status_code == expected
+
+        if self.response.status_code != expected:
+            raise ValidationException(
+                f"Expected status {expected}, received {self.response.status_code}"
+            )
+
         return self
 
     def has_key(self, key: str) -> "ResponseValidator":

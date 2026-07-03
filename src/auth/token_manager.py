@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from src.auth.token_cache import TokenCache
 from src.auth.token_provider import TokenProvider
 
 
@@ -13,11 +14,19 @@ class TokenManager:
     def __init__(
         self,
         provider: TokenProvider,
+        cache: TokenCache,
     ) -> None:
         self._provider = provider
+        self._cache = cache
 
     def get_token(self) -> str:
-        """
-        Return an access token.
-        """
-        return self._provider.get_token()
+        cached = self._cache.get()
+
+        if cached is not None:
+            return cached.access_token
+
+        response = self._provider.get_token()
+
+        self._cache.set(response)
+
+        return response.access_token

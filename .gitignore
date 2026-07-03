@@ -2,18 +2,21 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.egg-info/
 
 # Virtual Environment
 .venv/
 venv/
-env/
 
 # Pytest
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Coverage
 .coverage
 htmlcov/
+coverage.xml
 
 # Logs
 logs/
@@ -21,6 +24,7 @@ logs/
 
 # Reports
 reports/
+.coverage.*
 
 # macOS
 .DS_Store

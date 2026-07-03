@@ -1,5 +1,5 @@
 from src.auth.authentication_manager import AuthenticationManager
-from src.auth.bearer_auth import BearerAuth
+from src.auth.strategies.bearer_auth import BearerAuth
 from src.auth.token_manager import TokenManager
 
 

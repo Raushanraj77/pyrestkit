@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import Any, cast
 
+from src.exceptions.configuration_exception import ConfigurationException
+
 
 class ConfigManager:
     """
@@ -36,8 +38,8 @@ class ConfigManager:
         config_file = Path(__file__).parent / f"{self.environment}.json"
 
         if not config_file.exists():
-            raise FileNotFoundError(
-                f"Configuration file '{config_file.name}' not found."
+            raise ConfigurationException(
+                f"Configuration file '{self.environment}' not found."
             )
 
         with open(config_file) as file:

@@ -1,16 +1,12 @@
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
+
+from src.auth.token_response import TokenResponse
 
 
 class TokenProvider(ABC):
-    """
-    Provides authentication tokens.
-    """
-
     @abstractmethod
-    def get_token(self) -> str:
+    def get_token(self) -> TokenResponse:
         """
-        Fetch a new access token.
+        Fetch a new token.
         """
         raise NotImplementedError
