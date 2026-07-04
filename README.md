@@ -279,13 +279,20 @@ All tests passed
 
 PyRestKit provides a Makefile to simplify common development tasks.
 
+Clone the repository.
+
+Install development dependencies.
+
 ```bash
-make lint        # Run Ruff
-make typecheck   # Run MyPy
-make test        # Run Pytest
-make check       # Run all quality checks
-make format      # Format code
+make install-dev
 ```
+
+Run quality checks.
+
+```bash
+make check
+```
+
 ## 🔄 Continuous Integration
 
 PyRestKit uses GitHub Actions to automatically validate every push and pull request.

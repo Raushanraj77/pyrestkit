@@ -1,5 +1,6 @@
 .PHONY: \
 	install \
+	install-dev \
 	lint \
 	typecheck \
 	test \
@@ -11,6 +12,9 @@
 
 install:
 	pip install -r requirements.txt
+
+install-dev:
+	pip install -r requirements-dev.txt
 
 lint:
 	ruff check .
