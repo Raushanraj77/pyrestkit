@@ -1,13 +1,13 @@
-from requests_mock import Mocker
+from __future__ import annotations
+
+import requests_mock
 
 from src.core.api_client import APIClient
 from src.validators.schema_validator import SchemaValidator
 
-RequestsMock = Mocker
-
 
 def test_schema_validator(
-    requests_mock: RequestsMock,
+    requests_mock: requests_mock.Mocker,
     api_client: APIClient,
 ) -> None:
     requests_mock.get(

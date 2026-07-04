@@ -57,7 +57,11 @@ exclude = [
     ".pytest_cache",
 ]
 [[tool.mypy.overrides]]
-module = "tests.*"
+module = [
+    "tests.*",
+    "requests_mock",
+    "requests_mock.*",
+]
 
 disallow_untyped_defs = false
 check_untyped_defs = true
