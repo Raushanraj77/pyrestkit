@@ -3,6 +3,7 @@
 ### A modern, type-safe and extensible Python REST API Automation Framework
 
 Build clean, maintainable and scalable API automation with fluent request builders, response assertions, schema validation and strong typing.
+![CI](https://github.com/Raushanraj77/pyrestkit/actions/workflows/ci.yml/badge.svg)
 
 ### Why PyRestKit?
 Most API automation projects become difficult to maintain as they grow.
@@ -37,7 +38,8 @@ Create readable API requests using a fluent interface.
 
 ```python
 response = (
-    api_client.request()
+    api_client
+    .request()
     .post("/users")
     .json(payload)
     .header("Authorization", token)
@@ -272,6 +274,30 @@ All checks passed!
 Success: no issues found
 All tests passed
 ```
+
+## 🛠️ Development
+
+PyRestKit provides a Makefile to simplify common development tasks.
+
+```bash
+make lint        # Run Ruff
+make typecheck   # Run MyPy
+make test        # Run Pytest
+make check       # Run all quality checks
+make format      # Format code
+```
+## 🔄 Continuous Integration
+
+PyRestKit uses GitHub Actions to automatically validate every push and pull request.
+
+The CI pipeline performs:
+
+- Ruff (Linting)
+- MyPy (Static Type Checking)
+- Pytest (Unit Testing)
+
+This ensures every change meets the framework's quality standards before being merged.
+
 #### PART 2 ###
 
 ---
@@ -471,11 +497,7 @@ The framework provides a fluent API for constructing requests.
 ### GET Request
 
 ```python
-response = (
-    client.request()
-    .get("/users")
-    .send()
-)
+response = client.request().get("/users").send()
 ```
 
 ---
@@ -484,7 +506,8 @@ response = (
 
 ```python
 response = (
-    client.request()
+    client
+    .request()
     .get("/users")
     .query(
         page=2,
@@ -500,14 +523,13 @@ response = (
 
 ```python
 response = (
-    client.request()
+    client
+    .request()
     .post("/users")
-    .json(
-        {
-            "name": "John",
-            "job": "Engineer",
-        }
-    )
+    .json({
+        "name": "John",
+        "job": "Engineer",
+    })
     .send()
 )
 ```
@@ -518,7 +540,8 @@ response = (
 
 ```python
 response = (
-    client.request()
+    client
+    .request()
     .get("/users")
     .header(
         "X-Request-Id",
@@ -534,14 +557,13 @@ response = (
 
 ```python
 response = (
-    client.request()
+    client
+    .request()
     .post("/users")
-    .headers(
-        {
-            "X-App": "Demo",
-            "X-Version": "1.0",
-        }
-    )
+    .headers({
+        "X-App": "Demo",
+        "X-Version": "1.0",
+    })
     .send()
 )
 ```
@@ -551,12 +573,7 @@ response = (
 ### Request Timeout
 
 ```python
-response = (
-    client.request()
-    .get("/users")
-    .timeout(15)
-    .send()
-)
+response = client.request().get("/users").timeout(15).send()
 ```
 
 ---
@@ -1208,3 +1225,10 @@ By combining:
 the framework helps teams write expressive, reliable, and maintainable API tests while following modern Python best practices.
 
 Happy Testing! 🚀
+
+## 📄 Project Resources
+
+- 📘 README – Project documentation
+- 📝 CHANGELOG – Release history
+- 🤝 CONTRIBUTING – Contribution guidelines
+- 📜 LICENSE – Project license
