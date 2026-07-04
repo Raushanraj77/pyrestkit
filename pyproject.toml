@@ -1,3 +1,8 @@
+[project]
+name = "pyrestkit"
+version = "1.0.0"
+description = "Modern Python REST API Automation Toolkit"
+
 [tool.ruff]
 line-length = 88
 target-version = "py313"

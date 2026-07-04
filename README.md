@@ -1,10 +1,13 @@
 # 🚀 PyRestKit
 
-### Modern Python REST API Automation Toolkit
+### A modern, type-safe and extensible Python REST API Automation Framework
 
-PyRestKit is a clean, extensible, and type-safe Python framework for REST API automation, designed with maintainability, scalability, and developer experience in mind.
+Build clean, maintainable and scalable API automation with fluent request builders, response assertions, schema validation and strong typing.
 
-Built using modern Python engineering practices, it provides a fluent API for building requests, validating responses, serializing models, and writing expressive API tests.
+### Why PyRestKit?
+Most API automation projects become difficult to maintain as they grow.
+
+PyRestKit focuses on clean architecture, strong typing, reusable business clients and fluent APIs so that test suites remain readable and maintainable.
 
 > A production-ready, scalable, and type-safe REST API automation framework built with Python.
 
@@ -223,7 +226,7 @@ Clone the repository:
 ```bash
 git clone <repository-url>
 
-cd python-api-framework
+cd pyrestkit
 ```
 
 Create a virtual environment:
@@ -276,7 +279,7 @@ All tests passed
 # 📂 Project Structure
 
 ```text
-python-api-framework/
+pyrestkit/
 │
 ├── src/
 │   ├── assertions/
