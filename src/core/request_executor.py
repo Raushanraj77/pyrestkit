@@ -2,13 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 
-import requests
-
 from src.config.config import ConfigManager
 from src.core.logger import FrameworkLogger
 from src.core.session_manager import SessionManager
 from src.exceptions.exception_mapper import ExceptionMapper
 from src.hooks.hook_manager import HookManager
+from src.response.framework_response import FrameworkResponse
 
 
 class RequestExecutor:
@@ -32,7 +31,7 @@ class RequestExecutor:
         method: str,
         url: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         self._logger.info(
             "%s %s",
             method.upper(),
@@ -62,4 +61,4 @@ class RequestExecutor:
             response.elapsed.total_seconds() * 1000,
         )
 
-        return response
+        return FrameworkResponse(response)

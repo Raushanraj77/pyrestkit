@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
-
-import requests
+from typing import TYPE_CHECKING, Any
 
 from src.auth.auth_strategy import AuthenticationStrategy
 from src.config.config import ConfigManager
@@ -10,6 +8,10 @@ from src.core.request_builder import RequestBuilder
 from src.core.request_executor import RequestExecutor
 from src.core.session_manager import SessionManager
 from src.hooks.hook_manager import HookManager
+from src.response.framework_response import FrameworkResponse
+
+if TYPE_CHECKING:
+    from src.builder.fluent_request_builder import FluentRequestBuilder
 
 
 class APIClient:
@@ -35,12 +37,31 @@ class APIClient:
             hook_manager=hook_manager,
         )
 
+    def request(self) -> FluentRequestBuilder:
+        """
+        Creates a fluent request builder.
+
+        Example:
+
+            response = (
+                api.request()
+                .get("/users")
+                .query(page=2)
+                .send()
+            )
+        """
+        from src.builder.fluent_request_builder import (
+            FluentRequestBuilder,
+        )
+
+        return FluentRequestBuilder(self)
+
     def _send_request(
         self,
         method: str,
         endpoint: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         url, kwargs = self._builder.build(
             endpoint,
             **kwargs,
@@ -56,7 +77,7 @@ class APIClient:
         self,
         endpoint: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         return self._send_request(
             "GET",
             endpoint,
@@ -67,7 +88,7 @@ class APIClient:
         self,
         endpoint: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         return self._send_request(
             "POST",
             endpoint,
@@ -78,7 +99,7 @@ class APIClient:
         self,
         endpoint: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         return self._send_request(
             "PUT",
             endpoint,
@@ -89,7 +110,7 @@ class APIClient:
         self,
         endpoint: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         return self._send_request(
             "PATCH",
             endpoint,
@@ -100,7 +121,7 @@ class APIClient:
         self,
         endpoint: str,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> FrameworkResponse:
         return self._send_request(
             "DELETE",
             endpoint,

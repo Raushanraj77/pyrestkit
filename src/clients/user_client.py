@@ -1,12 +1,13 @@
-from dataclasses import asdict
+from __future__ import annotations
 
-from requests import Response
+from dataclasses import asdict
 
 from src.clients.base_client import BaseClient
 from src.core.api_client import APIClient
 from src.endpoints.user_endpoints import UserEndpoints
 from src.models.request.create_user_request import CreateUserRequest
 from src.models.request.update_user_request import UpdateUserRequest
+from src.response.framework_response import FrameworkResponse
 
 
 class UserClient(BaseClient):
@@ -14,27 +15,33 @@ class UserClient(BaseClient):
     Business client responsible for User APIs.
 
     This client delegates HTTP operations to BaseClient.
-
     """
 
-    def __init__(self, api_client: APIClient) -> None:
+    def __init__(
+        self,
+        api_client: APIClient,
+    ) -> None:
         super().__init__(api_client)
 
-    def list_users(self) -> Response:
-        return self.get(UserEndpoints.list_users())
+    def list_users(
+        self,
+    ) -> FrameworkResponse:
+        return self.get(
+            UserEndpoints.list_users(),
+        )
 
     def get_user(
         self,
         user_id: int,
-    ) -> Response:
-
-        return self.get(UserEndpoints.get_user(user_id))
+    ) -> FrameworkResponse:
+        return self.get(
+            UserEndpoints.get_user(user_id),
+        )
 
     def create_user(
         self,
         request: CreateUserRequest,
-    ) -> Response:
-
+    ) -> FrameworkResponse:
         return self.post(
             UserEndpoints.create_user(),
             json=asdict(request),
@@ -44,8 +51,7 @@ class UserClient(BaseClient):
         self,
         user_id: int,
         request: UpdateUserRequest,
-    ) -> Response:
-
+    ) -> FrameworkResponse:
         return self.put(
             UserEndpoints.update_user(user_id),
             json=asdict(request),
@@ -54,6 +60,7 @@ class UserClient(BaseClient):
     def delete_user(
         self,
         user_id: int,
-    ) -> Response:
-
-        return self.delete(UserEndpoints.delete_user(user_id))
+    ) -> FrameworkResponse:
+        return self.delete(
+            UserEndpoints.delete_user(user_id),
+        )

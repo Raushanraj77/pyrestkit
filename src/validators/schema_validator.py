@@ -2,31 +2,32 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
-import requests
 from jsonschema import validate
 
-ROOT = Path(__file__).resolve().parents[2]
+from src.response.framework_response import FrameworkResponse
 
 
 class SchemaValidator:
     """
-    Validates API response against JSON Schema.
+    Validates a response against a JSON schema.
     """
 
     @staticmethod
     def validate(
-        response: requests.Response,
-        schema_file: str,
+        response: FrameworkResponse,
+        schema_path: str,
     ) -> None:
-        schema_path = ROOT / schema_file
+        schema_file = Path(schema_path)
 
-        with schema_path.open(
+        with schema_file.open(
             encoding="utf-8",
         ) as file:
-            schema = json.load(file)
+            schema: dict[str, Any] = json.load(file)
 
         validate(
-            instance=response.json(),
+            # instance=response.json(),
+            instance=response.body.to_dict(),
             schema=schema,
         )
