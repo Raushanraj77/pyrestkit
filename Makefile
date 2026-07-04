@@ -1,3 +1,10 @@
+# ==============================================================================
+# PyRestKit Makefile
+# ==============================================================================
+
+PYTHON ?= python3
+PIP ?= pip3
+
 .PHONY: \
 	install \
 	install-dev \
@@ -10,30 +17,50 @@
 	format \
 	clean
 
+# ------------------------------------------------------------------------------
+# Installation
+# ------------------------------------------------------------------------------
+
 install:
-	pip install -r requirements.txt
+	$(PIP) install -r requirements.txt
 
 install-dev:
-	pip install -r requirements-dev.txt
+	$(PIP) install -r requirements-dev.txt
+
+# ------------------------------------------------------------------------------
+# Code Quality
+# ------------------------------------------------------------------------------
 
 lint:
-	ruff check .
+	$(PYTHON) -m ruff check .
 
 typecheck:
-	mypy .
+	$(PYTHON) -m mypy .
+
+format:
+	$(PYTHON) -m ruff format .
+
+# ------------------------------------------------------------------------------
+# Testing
+# ------------------------------------------------------------------------------
 
 test:
-	pytest --no-cov
+	$(PYTHON) -m pytest --no-cov
 
 coverage:
-	pytest
+	$(PYTHON) -m pytest \
+		--cov=src \
+		--cov-report=term-missing \
+		--cov-report=html \
+		--cov-report=xml
 
 quality: lint typecheck coverage
 
 check: quality
 
-format:
-	ruff format .
+# ------------------------------------------------------------------------------
+# Cleanup
+# ------------------------------------------------------------------------------
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
