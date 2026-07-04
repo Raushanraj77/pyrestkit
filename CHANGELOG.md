@@ -15,6 +15,14 @@ This project follows Semantic Versioning (SemVer).
 * Automated quality pipeline using Ruff, MyPy and Pytest
 * Development and CI documentation
 
+### Changed
+
+* Refactored dependency management by separating runtime and development dependencies.
+* Simplified project installation for contributors.
+* Resolved dependency conflicts in GitHub Actions CI.
+* Improved project reproducibility across clean environments.
+
+
 ---
 
 ## [1.0.0] - 2026-07-04

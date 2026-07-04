@@ -280,6 +280,14 @@ All tests passed
 PyRestKit provides a Makefile to simplify common development tasks.
 
 Clone the repository.
+### Install Development Dependencies
+
+```bash
+make install-dev
+```
+
+This installs all runtime and development dependencies required for linting, type checking, testing, and contributing to PyRestKit.
+
 
 Install development dependencies.
 
