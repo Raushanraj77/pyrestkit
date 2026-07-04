@@ -1,4 +1,10 @@
-# 🚀 Python API Automation Framework
+# 🚀 PyRestKit
+
+### Modern Python REST API Automation Toolkit
+
+PyRestKit is a clean, extensible, and type-safe Python framework for REST API automation, designed with maintainability, scalability, and developer experience in mind.
+
+Built using modern Python engineering practices, it provides a fluent API for building requests, validating responses, serializing models, and writing expressive API tests.
 
 > A production-ready, scalable, and type-safe REST API automation framework built with Python.
 
