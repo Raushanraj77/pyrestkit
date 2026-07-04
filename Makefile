@@ -49,7 +49,7 @@ test:
 
 coverage:
 	$(PYTHON) -m pytest \
-		--cov=src \
+		--cov=pyrestkit \
 		--cov-report=term-missing \
 		--cov-report=html \
 		--cov-report=xml

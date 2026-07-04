@@ -58,6 +58,7 @@ Issues = "https://github.com/Raushanraj77/pyrestkit/issues"
 include-package-data = true
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["pyrestkit*"]
 exclude = ["tests*"]
 
@@ -128,28 +129,6 @@ check_untyped_defs = true
 module = "jsonschema"
 
 ignore_missing_imports = true
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-
-python_files = [
-    "test_*.py",
-]
-
-python_functions = [
-    "test_*",
-]
-
-addopts = """
--v
--ra
---strict-markers
---strict-config
---cov=src
---cov-report=term-missing
---cov-report=html
---cov-report=xml
-"""
 
 [tool.coverage.run]
 source = ["pyrestkit"]
