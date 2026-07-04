@@ -7,7 +7,7 @@ import pytest
 import requests
 from jsonschema import ValidationError
 
-from src.response.framework_response import FrameworkResponse
+from pyrestkit.response.framework_response import FrameworkResponse
 
 
 def test_match_schema(

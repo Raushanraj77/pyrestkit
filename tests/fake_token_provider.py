@@ -1,5 +1,5 @@
-from src.auth.token_provider import TokenProvider
-from src.auth.token_response import TokenResponse
+from pyrestkit.auth.token_provider import TokenProvider
+from pyrestkit.auth.token_response import TokenResponse
 
 
 ###NOT REQUIRED THIS FILE IS ONLY FOR TESTING PURPOSES. DO NOT USE IN PRODUCTION###

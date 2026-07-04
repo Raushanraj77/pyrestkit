@@ -5,8 +5,8 @@ from datetime import timedelta
 import pytest
 import requests
 
-from src.assertions.assertion_exception import AssertionException
-from src.response.framework_response import FrameworkResponse
+from pyrestkit.assertions.assertion_exception import AssertionException
+from pyrestkit.response.framework_response import FrameworkResponse
 
 
 def test_response_within_limit() -> None:

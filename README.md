@@ -322,7 +322,7 @@ This ensures every change meets the framework's quality standards before being m
 ```text
 pyrestkit/
 │
-├── src/
+├── pyrestkit/
 │   ├── assertions/
 │   ├── auth/
 │   ├── builder/
@@ -404,7 +404,7 @@ Framework configuration is managed through `ConfigManager`.
 Example:
 
 ```python
-from src.config import ConfigManager
+from pyrestkit import ConfigManager
 
 config = ConfigManager("dev")
 ```
@@ -437,10 +437,10 @@ config/
 Create a reusable API client for your application.
 
 ```python
-from src.auth import BearerAuth
-from src.config import ConfigManager
-from src.core import APIClient
-from src.core import SessionManager
+from pyrestkit import BearerAuth
+from pyrestkit import ConfigManager
+from pyrestkit import APIClient
+from pyrestkit import SessionManager
 
 config = ConfigManager("dev")
 
@@ -468,7 +468,7 @@ The framework supports multiple authentication strategies.
 ## Bearer Token
 
 ```python
-from src.auth import BearerAuth
+from pyrestkit import BearerAuth
 
 auth = BearerAuth(
     token="your-token",
@@ -480,7 +480,7 @@ auth = BearerAuth(
 ## Basic Authentication
 
 ```python
-from src.auth import BasicAuth
+from pyrestkit import BasicAuth
 
 auth = BasicAuth(
     username="admin",
@@ -493,7 +493,7 @@ auth = BasicAuth(
 ## API Key Authentication
 
 ```python
-from src.auth import APIKeyAuth
+from pyrestkit import APIKeyAuth
 
 auth = APIKeyAuth(
     key="your-api-key",
@@ -600,7 +600,7 @@ Business clients encapsulate API endpoints into reusable methods.
 Example:
 
 ```python
-from src.clients import UserClient
+from pyrestkit import UserClient
 
 user_client = UserClient(client)
 
@@ -616,7 +616,7 @@ response = user_client.get_user(2)
 Create a user:
 
 ```python
-from src.models import CreateUserRequest
+from pyrestkit import CreateUserRequest
 
 request = CreateUserRequest(
     name="John",
@@ -629,7 +629,7 @@ response = user_client.create_user(request)
 Update a user:
 
 ```python
-from src.models import UpdateUserRequest
+from pyrestkit import UpdateUserRequest
 
 request = UpdateUserRequest(
     name="John Updated",
@@ -895,7 +895,7 @@ The framework also provides standalone validators for situations where assertion
 ## Response Validator
 
 ```python
-from src.validators import ResponseValidator
+from pyrestkit import ResponseValidator
 
 ResponseValidator.validate_status(
     response,
@@ -908,7 +908,7 @@ ResponseValidator.validate_status(
 ## JSON Schema Validator
 
 ```python
-from src.validators import SchemaValidator
+from pyrestkit import SchemaValidator
 
 SchemaValidator.validate(
     response,
@@ -927,7 +927,7 @@ Factories simplify the creation of reusable test data.
 Example:
 
 ```python
-from src.factories import UserFactory
+from pyrestkit import UserFactory
 
 request = UserFactory.random()
 ```

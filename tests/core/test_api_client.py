@@ -1,6 +1,6 @@
 from typing import Any
 
-from src.core.api_client import APIClient
+from pyrestkit.core.api_client import APIClient
 
 
 def test_get_request(

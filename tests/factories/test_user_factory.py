@@ -1,4 +1,4 @@
-from src.factories.user_factory import UserFactory
+from pyrestkit.factories.user_factory import UserFactory
 
 
 def test_random_factory() -> None:

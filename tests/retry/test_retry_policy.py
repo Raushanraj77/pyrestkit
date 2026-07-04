@@ -4,12 +4,12 @@ from typing import Any
 
 import requests
 
-from src.auth.auth_strategy import AuthenticationStrategy
-from src.config.config import ConfigManager
-from src.core.logger import FrameworkLogger
-from src.core.session_manager import SessionManager
-from src.retry.retry_handler import RetryHandler
-from src.retry.retry_policy import RetryPolicy
+from pyrestkit.auth.auth_strategy import AuthenticationStrategy
+from pyrestkit.config.config import ConfigManager
+from pyrestkit.core.logger import FrameworkLogger
+from pyrestkit.core.session_manager import SessionManager
+from pyrestkit.retry.retry_handler import RetryHandler
+from pyrestkit.retry.retry_policy import RetryPolicy
 
 
 class APIClient:

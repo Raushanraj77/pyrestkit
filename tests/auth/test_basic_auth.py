@@ -1,4 +1,4 @@
-from src.auth.strategies.basic_auth import BasicAuth
+from pyrestkit.auth.strategies.basic_auth import BasicAuth
 
 
 def test_basic_auth_headers() -> None:

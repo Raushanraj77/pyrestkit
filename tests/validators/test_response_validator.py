@@ -1,4 +1,4 @@
-from src.validators.response_validator import ResponseValidator
+from pyrestkit.validators.response_validator import ResponseValidator
 
 
 def test_response_validator(requests_mock, api_client):

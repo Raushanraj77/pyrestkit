@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from src.response.response_body import ResponseBody
+from pyrestkit.response.response_body import ResponseBody
 
 
 def test_attribute_access() -> None:

@@ -1,6 +1,6 @@
-from src.auth.authentication_manager import AuthenticationManager
-from src.auth.strategies.bearer_auth import BearerAuth
-from src.auth.token_manager import TokenManager
+from pyrestkit.auth.authentication_manager import AuthenticationManager
+from pyrestkit.auth.strategies.bearer_auth import BearerAuth
+from pyrestkit.auth.token_manager import TokenManager
 
 
 def test_authentication_manager_returns_headers(

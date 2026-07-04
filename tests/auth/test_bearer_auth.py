@@ -1,7 +1,7 @@
-from src.auth.strategies.bearer_auth import BearerAuth
-from src.auth.token_cache import TokenCache
-from src.auth.token_manager import TokenManager
-from src.auth.token_response import TokenResponse
+from pyrestkit.auth.strategies.bearer_auth import BearerAuth
+from pyrestkit.auth.token_cache import TokenCache
+from pyrestkit.auth.token_manager import TokenManager
+from pyrestkit.auth.token_response import TokenResponse
 from tests.fake_token_provider import FakeTokenProvider
 
 

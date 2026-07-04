@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 import requests
 
-from src.assertions.assertion_exception import AssertionException
-from src.response.framework_response import FrameworkResponse
+from pyrestkit.assertions.assertion_exception import AssertionException
+from pyrestkit.response.framework_response import FrameworkResponse
 
 
 def test_have_status_passes() -> None:

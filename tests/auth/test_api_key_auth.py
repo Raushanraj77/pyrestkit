@@ -1,4 +1,4 @@
-from src.auth.strategies.api_key_auth import ApiKeyAuth
+from pyrestkit.auth.strategies.api_key_auth import ApiKeyAuth
 
 
 def test_api_key_headers() -> None:

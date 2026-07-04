@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import requests_mock
 
-from src.core.api_client import APIClient
-from src.validators.schema_validator import SchemaValidator
+from pyrestkit.core.api_client import APIClient
+from pyrestkit.validators.schema_validator import SchemaValidator
 
 
 def test_schema_validator(

@@ -1,4 +1,4 @@
-from src.core.logger import FrameworkLogger
+from pyrestkit.core.logger import FrameworkLogger
 
 
 def test_logger_creation() -> None:

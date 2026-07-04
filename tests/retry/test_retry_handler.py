@@ -4,8 +4,8 @@ import pytest
 import requests
 from requests.exceptions import ConnectionError
 
-from src.retry.retry_handler import RetryHandler
-from src.retry.retry_policy import RetryPolicy
+from pyrestkit.retry.retry_handler import RetryHandler
+from pyrestkit.retry.retry_policy import RetryPolicy
 
 
 def test_returns_success_without_retry() -> None:
@@ -24,7 +24,7 @@ def test_returns_success_without_retry() -> None:
 
 def test_retries_until_success(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(
-        "src.retry.backoff.time.sleep",
+        "pyrestkit.retry.backoff.time.sleep",
         lambda _: None,
     )
 
@@ -54,7 +54,7 @@ def test_retries_exception_then_success(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
-        "src.retry.backoff.time.sleep",
+        "pyrestkit.retry.backoff.time.sleep",
         lambda _: None,
     )
 
@@ -80,7 +80,7 @@ def test_raises_after_retry_limit(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
-        "src.retry.backoff.time.sleep",
+        "pyrestkit.retry.backoff.time.sleep",
         lambda _: None,
     )
 

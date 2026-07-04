@@ -1,4 +1,4 @@
-from src.endpoints.user_endpoints import UserEndpoints
+from pyrestkit.endpoints.user_endpoints import UserEndpoints
 
 
 def test_list_users_endpoint() -> None:

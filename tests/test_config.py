@@ -1,4 +1,4 @@
-from src.config.config import ConfigManager
+from pyrestkit.config.config import ConfigManager
 
 
 def test_load_dev_config() -> None:

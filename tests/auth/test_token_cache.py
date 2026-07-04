@@ -1,5 +1,5 @@
-from src.auth.token_cache import TokenCache
-from src.auth.token_response import TokenResponse
+from pyrestkit.auth.token_cache import TokenCache
+from pyrestkit.auth.token_response import TokenResponse
 
 
 def test_cache_set_and_get() -> None:

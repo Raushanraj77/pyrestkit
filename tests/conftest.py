@@ -2,12 +2,12 @@ from collections.abc import Generator
 
 import pytest
 
-from src.auth.token_cache import TokenCache
-from src.auth.token_manager import TokenManager
-from src.clients.user_client import UserClient
-from src.config.config import ConfigManager
-from src.core.api_client import APIClient
-from src.core.session_manager import SessionManager
+from pyrestkit.auth.token_cache import TokenCache
+from pyrestkit.auth.token_manager import TokenManager
+from pyrestkit.clients.user_client import UserClient
+from pyrestkit.config.config import ConfigManager
+from pyrestkit.core.api_client import APIClient
+from pyrestkit.core.session_manager import SessionManager
 from tests.fake_token_provider import FakeTokenProvider
 
 

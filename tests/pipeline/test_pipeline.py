@@ -1,5 +1,5 @@
-from src.pipeline.pipeline import RequestPipeline
-from src.pipeline.request_context import RequestContext
+from pyrestkit.pipeline.pipeline import RequestPipeline
+from pyrestkit.pipeline.request_context import RequestContext
 
 
 def test_empty_pipeline() -> None:

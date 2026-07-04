@@ -1,6 +1,6 @@
 import requests
 
-from src.core.session_manager import SessionManager
+from pyrestkit.core.session_manager import SessionManager
 
 
 def test_session_creation() -> None:

@@ -1,7 +1,65 @@
+[build-system]
+requires = [
+    "setuptools>=75.0",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pyrestkit"
-version = "1.0.1"
+version = "1.1.0"
 description = "Modern Python REST API Automation Toolkit"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+authors = [
+    { name = "Raushan Raj" }
+]
+
+keywords = [
+    "api",
+    "rest",
+    "automation",
+    "testing",
+    "pytest",
+    "framework",
+    "qa",
+    "sdet"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Internet :: WWW/HTTP",
+]
+
+dependencies = [
+    "requests>=2.32.0",
+    "pydantic>=2.10.0",
+    "jsonschema>=4.23.0",
+    "python-dotenv>=1.0.0",
+    "PyYAML>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Raushanraj77/pyrestkit"
+Repository = "https://github.com/Raushanraj77/pyrestkit"
+Issues = "https://github.com/Raushanraj77/pyrestkit/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["pyrestkit*"]
+exclude = ["tests*"]
 
 [tool.ruff]
 line-length = 88
@@ -94,15 +152,15 @@ addopts = """
 """
 
 [tool.coverage.run]
-source = ["src"]
+source = ["pyrestkit"]
 branch = true
 omit = [
     "tests/*",
-    "src/endpoints/order_endpoints.py",
-    "src/endpoints/payment_endpoints.py",
-    "src/hooks/request_hook.py",
-    "src/hooks/response_hook.py",
-    "src/hooks/timing_hook.py",
+    "pyrestkit/endpoints/order_endpoints.py",
+    "pyrestkit/endpoints/payment_endpoints.py",
+    "pyrestkit/hooks/request_hook.py",
+    "pyrestkit/hooks/response_hook.py",
+    "pyrestkit/hooks/timing_hook.py",
 ]
 
 [tool.coverage.report]

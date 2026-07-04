@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 import requests_mock
 
-from src.builder.fluent_request_builder import FluentRequestBuilder
-from src.core.api_client import APIClient
+from pyrestkit.builder.fluent_request_builder import FluentRequestBuilder
+from pyrestkit.core.api_client import APIClient
 
 
 def test_get_request(

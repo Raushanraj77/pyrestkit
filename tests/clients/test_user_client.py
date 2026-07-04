@@ -1,8 +1,8 @@
 from typing import Any
 
-from src.clients.user_client import UserClient
-from src.models.request.create_user_request import CreateUserRequest
-from src.models.request.update_user_request import UpdateUserRequest
+from pyrestkit.clients.user_client import UserClient
+from pyrestkit.models.request.create_user_request import CreateUserRequest
+from pyrestkit.models.request.update_user_request import UpdateUserRequest
 
 
 def test_get_user(

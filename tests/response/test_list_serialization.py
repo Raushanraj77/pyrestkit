@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 import requests
 
-from src.models.response.user_response import UserResponse
-from src.response.framework_response import FrameworkResponse
+from pyrestkit.models.response.user_response import UserResponse
+from pyrestkit.response.framework_response import FrameworkResponse
 
 
 def test_as_list() -> None:
