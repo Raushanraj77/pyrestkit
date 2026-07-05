@@ -44,10 +44,6 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
 ]
 
-[tool.setuptools_scm]
-version_scheme = "guess-next-dev"
-local_scheme = "no-local-version"
-
 dependencies = [
     "requests>=2.32.0",
     "pydantic>=2.10.0",
@@ -55,6 +51,10 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "PyYAML>=6.0",
 ]
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
 
 
 [project.optional-dependencies]
