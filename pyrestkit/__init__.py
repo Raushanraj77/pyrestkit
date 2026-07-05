@@ -17,6 +17,8 @@ from pyrestkit.models.request.update_user_request import UpdateUserRequest
 from pyrestkit.validators.response_validator import ResponseValidator
 from pyrestkit.validators.schema_validator import SchemaValidator
 
+from ._version import version as __version__
+
 try:
     from ._version import version as __version__
 except ImportError:
