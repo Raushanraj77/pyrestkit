@@ -20,8 +20,8 @@ from pyrestkit.validators.response_validator import ResponseValidator
 from pyrestkit.validators.schema_validator import SchemaValidator
 
 try:
-    __version__ = version("pyrestkit")
-except PackageNotFoundError:
+    from ._version import version as __version__
+except ImportError:
     __version__ = "0.0.0"
 
 __all__ = [
