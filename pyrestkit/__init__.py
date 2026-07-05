@@ -4,8 +4,6 @@ PyRestKit
 Modern Python REST API Automation Toolkit.
 """
 
-from importlib.metadata import PackageNotFoundError, version
-
 from pyrestkit.auth.strategies.api_key_auth import ApiKeyAuth
 from pyrestkit.auth.strategies.basic_auth import BasicAuth
 from pyrestkit.auth.strategies.bearer_auth import BearerAuth
