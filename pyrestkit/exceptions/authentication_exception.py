@@ -6,4 +6,5 @@ class AuthenticationException(APIException):
     Raised when authentication fails.
     """
 
-    pass
+    def __init__(self, message: str = "Authentication failed.") -> None:
+        super().__init__(message)

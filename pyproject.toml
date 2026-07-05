@@ -5,10 +5,11 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+
 [project]
 name = "pyrestkit"
-version = "1.1.0"
-description = "Modern Python REST API Automation Toolkit"
+version = "1.2.0"
+description = "Modern Python REST API Automation Toolkit With AI"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -25,7 +26,9 @@ keywords = [
     "pytest",
     "framework",
     "qa",
-    "sdet"
+    "sdet",
+    "ai",
+    "llm",
 ]
 
 classifiers = [
@@ -49,18 +52,53 @@ dependencies = [
     "PyYAML>=6.0",
 ]
 
+
+[project.optional-dependencies]
+ai = [
+    "openai>=1.0.0",
+    "anthropic>=0.30.0",
+    "boto3>=1.34.0",
+    "google-generativeai>=0.7.0",
+    "mistralai>=1.0.0",
+    "cohere>=5.0.0"
+]
+
+all = [
+    "pyrestkit[ai]"
+]
+
+
 [project.urls]
 Homepage = "https://github.com/Raushanraj77/pyrestkit"
 Repository = "https://github.com/Raushanraj77/pyrestkit"
 Issues = "https://github.com/Raushanraj77/pyrestkit/issues"
 
+
+# ----------------------------
+# SETUPTOOLS CONFIG
+# ----------------------------
+
 [tool.setuptools]
 include-package-data = true
 
+
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
 include = ["pyrestkit*"]
-exclude = ["tests*"]
+exclude = [
+    "tests*",
+]
+
+
+[tool.setuptools.package-data]
+pyrestkit = [
+    "ai/prompts/*.md"
+]
+
+
+# ----------------------------
+# RUFF
+# ----------------------------
 
 [tool.ruff]
 line-length = 88
@@ -74,21 +112,18 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-select = [
-    "E",
-    "F",
-    "W",
-    "I",
-    "UP",
-    "B",
-]
-
+select = ["E", "F", "W", "I", "UP", "B"]
 ignore = []
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 line-ending = "auto"
+
+
+# ----------------------------
+# MYPY
+# ----------------------------
 
 [tool.mypy]
 python_version = "3.13"
@@ -100,14 +135,12 @@ disallow_untyped_defs = true
 disallow_incomplete_defs = true
 
 check_untyped_defs = true
-
 no_implicit_optional = true
 
 warn_redundant_casts = true
 warn_unused_ignores = true
 
 strict_equality = true
-
 pretty = true
 
 exclude = [
@@ -115,20 +148,24 @@ exclude = [
     ".mypy_cache",
     ".pytest_cache",
 ]
+
 [[tool.mypy.overrides]]
 module = [
     "tests.*",
     "requests_mock",
     "requests_mock.*",
 ]
-
 disallow_untyped_defs = false
 check_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = "jsonschema"
-
 ignore_missing_imports = true
+
+
+# ----------------------------
+# COVERAGE
+# ----------------------------
 
 [tool.coverage.run]
 source = ["pyrestkit"]

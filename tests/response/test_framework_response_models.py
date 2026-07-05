@@ -1,10 +1,16 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 
 import pytest
 import requests
 
+from pyrestkit.ai.client import AIClient
+from pyrestkit.ai.config import AIConfig
+from pyrestkit.ai.exceptions import AIConfigurationError
+from pyrestkit.ai.models import FailureAnalysis
+from pyrestkit.ai.provider import StaticAIProvider
 from pyrestkit.response.framework_response import FrameworkResponse
 
 
@@ -257,6 +263,43 @@ def test_as_model_requires_dataclass() -> None:
 
     with pytest.raises(TypeError):
         FrameworkResponse(response).as_model(Dummy)
+
+
+def test_framework_response_ai_returns_structured_failure_analysis() -> None:
+    response = requests.Response()
+    response.status_code = 500
+    response._content = b'{"error":"bad"}'
+    response.url = "https://example.com/users/2"
+
+    provider = StaticAIProvider(
+        json.dumps({
+            "summary": "Request failed",
+            "likely_cause": "Server error",
+            "recommended_fix": "Retry later",
+            "confidence": 0.9,
+        })
+    )
+    client = AIClient(
+        config=AIConfig(provider="openai", model="gpt-test"),
+        provider=provider,
+    )
+
+    analysis = FrameworkResponse(response).ai.explain_failure(client=client)
+
+    assert isinstance(analysis, FailureAnalysis)
+    assert analysis.summary == "Request failed"
+    assert analysis.likely_cause == "Server error"
+    assert analysis.recommended_fix == "Retry later"
+    assert analysis.confidence == 0.9
+
+
+def test_framework_response_ai_requires_configuration() -> None:
+    response = requests.Response()
+    response.status_code = 500
+    response._content = b'{"error":"bad"}'
+
+    with pytest.raises(AIConfigurationError, match="AI is not configured"):
+        FrameworkResponse(response).ai.explain_failure()
 
 
 def test_as_list_requires_dataclass() -> None:

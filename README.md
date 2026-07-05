@@ -1,478 +1,232 @@
 # 🚀 PyRestKit
 
-### A modern, type-safe and extensible Python REST API Automation Framework
+> A modern Python framework for REST API automation with built-in validation,
+> authentication, configuration management, and optional AI-assisted failure analysis.
 
-Build clean, maintainable and scalable API automation with fluent request builders, response assertions, schema validation and strong typing.
-![CI](https://github.com/Raushanraj77/pyrestkit/actions/workflows/ci.yml/badge.svg)
-
-### Why PyRestKit?
-Most API automation projects become difficult to maintain as they grow.
-
-PyRestKit focuses on clean architecture, strong typing, reusable business clients and fluent APIs so that test suites remain readable and maintainable.
-
-> A production-ready, scalable, and type-safe REST API automation framework built with Python.
-
-![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)
-![Pytest](https://img.shields.io/badge/Tested%20With-Pytest-green.svg)
-![Ruff](https://img.shields.io/badge/Lint-Ruff-orange.svg)
-![MyPy](https://img.shields.io/badge/Type%20Checked-MyPy-blueviolet.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
+[![PyPI](https://img.shields.io/pypi/v/pyrestkit.svg)](https://pypi.org/project/pyrestkit/)
+[![License](https://img.shields.io/github/license/Raushanraj77/pyrestkit)](LICENSE)
+[![Tests](https://github.com/Raushanraj77/pyrestkit/actions/workflows/tests.yml/badge.svg)](https://github.com/Raushanraj77/pyrestkit/actions)
+[![Code Style](https://img.shields.io/badge/code%20style-ruff-black)](https://docs.astral.sh/ruff/)
+[![Type Checked](https://img.shields.io/badge/type%20checked-mypy-blue)](https://mypy-lang.org/)
 
 ---
 
-## 📖 Overview
+## Why PyRestKit?
 
-Python API Automation Framework is a modern automation framework designed for testing REST APIs with clean architecture, fluent APIs, and strong type safety.
+Testing REST APIs often requires combining multiple libraries for:
 
-The framework is built around maintainability, scalability, and developer productivity. It provides reusable components for API clients, authentication, response validation, schema validation, retry mechanisms, hooks, request builders, and business-layer clients.
+- HTTP requests
+- Authentication
+- Configuration management
+- Assertions
+- JSON validation
+- Logging
+- Retry handling
+- Environment management
 
-Whether you are testing a small REST API or building an enterprise automation suite, the framework provides a structured and extensible foundation.
+As projects grow, these utilities become difficult to maintain consistently across teams.
 
----
+PyRestKit provides a unified, extensible framework that brings these capabilities together while keeping your test code clean, maintainable, and type-safe.
 
-## ✨ Key Features
-
-### 🔹 Fluent Request Builder
-
-Create readable API requests using a fluent interface.
-
-```python
-response = (
-    api_client
-    .request()
-    .post("/users")
-    .json(payload)
-    .header("Authorization", token)
-    .timeout(30)
-    .send()
-)
-```
+In addition, PyRestKit offers **optional AI-assisted failure analysis**, enabling engineers to receive intelligent explanations and debugging suggestions from multiple Large Language Model (LLM) providers.
 
 ---
 
-### 🔹 Multiple Authentication Strategies
+# Features
 
-Supports multiple authentication mechanisms out of the box.
+## REST API Client
 
-* Bearer Token Authentication
-* Basic Authentication
-* API Key Authentication
-* Authentication Manager
-* Token Cache
-* Token Manager
-
----
-
-### 🔹 Strongly Typed Responses
-
-Work with Python models instead of raw dictionaries.
-
-```python
-user = response.as_model(UserResponse)
-
-print(user.email)
-```
+- Simple request API
+- GET / POST / PUT / PATCH / DELETE
+- Custom headers
+- Query parameters
+- Cookies
+- Multipart requests
+- Request timeout support
 
 ---
 
-### 🔹 Fluent Response Assertions
+## Authentication
 
-Readable assertions for API validation.
+Built-in authentication helpers:
 
-```python
-response.should.have_status(200)
-
-response.should.be_successful()
-
-response.should.have_json(
-    "data.email",
-    "janet@example.com",
-)
-
-response.should.match_schema(
-    "schemas/user.json",
-)
-```
+- Basic Authentication
+- Bearer Token
+- API Key
+- OAuth 2.0 (yet to implement)
+- Custom authentication strategies
 
 ---
 
-### 🔹 Response Wrapper
+## Validation
 
-Provides a rich response abstraction.
+Powerful response validation utilities.
 
-* Status Code
-* Headers
-* Response Body
-* Response Time
-* JSON Access
-* Model Serialization
+Supported validations include:
 
----
-
-### 🔹 JSON Schema Validation
-
-Validate responses against JSON Schema.
-
-```python
-SchemaValidator.validate(
-    response,
-    "schemas/user.json",
-)
-```
+- Status Code
+- Headers
+- JSON Schema
+- Response Time
+- JSON Path
+- Custom Validators
 
 ---
 
-### 🔹 Retry Mechanism
+## Configuration
 
-Automatically retry failed requests using configurable retry policies.
+Configuration can be loaded from
 
-Ideal for handling:
+- YAML
+- Environment Variables
+- Python Objects
 
-* Temporary network failures
-* Server-side transient errors
-* Rate limiting
-* Flaky environments
+Supports multiple environments including
 
----
-
-### 🔹 Hook System
-
-Execute custom logic before and after API requests.
-
-Examples include:
-
-* Logging
-* Request modification
-* Metrics collection
-* Reporting
-* Custom validation
+- Development
+- QA
+- Staging
+- Production
 
 ---
 
-### 🔹 Business API Clients
+## Assertions
 
-Encapsulate endpoint logic into reusable business clients.
+Readable assertions for
 
-```python
-user_client.list_users()
-
-user_client.get_user(2)
-
-user_client.create_user(request)
-```
-
----
-
-### 🔹 Test Data Factories
-
-Generate reusable request payloads.
-
-```python
-UserFactory.random()
-
-UserFactory.admin()
-
-UserFactory.load_from_file(...)
-```
+- Status codes
+- Headers
+- JSON values
+- Collections
+- Response time
+- Custom assertions
 
 ---
 
-### 🔹 Clean Architecture
+## AI-Assisted Failure Analysis
 
-The framework follows a layered architecture with clear separation of responsibilities.
+PyRestKit can analyze failed API responses using AI.
 
-* Configuration
-* Authentication
-* HTTP Client
-* Request Builder
-* Business Clients
-* Validators
-* Assertions
-* Response Models
-* Retry
-* Hooks
-* Factories
+Features include
 
----
+- Root cause explanation
+- Human-readable summaries
+- Suggested fixes
+- Optional system prompts
+- Prompt templates
+- Provider abstraction
 
-### 🔹 Production Quality
-
-The project follows modern Python development practices.
-
-* ✅ Strict MyPy type checking
-* ✅ Ruff linting
-* ✅ Pytest test suite
-* ✅ Type hints throughout
-* ✅ Modular architecture
-* ✅ Extensible design
-* ✅ Clean coding standards
+AI support is completely optional and does not affect users who prefer traditional API testing.
 
 ---
 
-## 🎯 Goals
+## Multiple AI Providers
 
-This framework aims to:
+PyRestKit currently supports:
 
-* Simplify REST API automation.
-* Promote reusable and maintainable test code.
-* Encourage strong typing and clean architecture.
-* Reduce boilerplate in API tests.
-* Provide a scalable foundation for enterprise automation projects.
+| Provider | Supported |
+|-----------|-----------|
+| OpenAI | ✅ |
+| Anthropic | ✅ |
+| Google Gemini | ✅ |
+| Azure OpenAI | ✅ |
+| Groq | ✅ |
+| Cohere | ✅ |
+| Mistral | ✅ |
+| Ollama | ✅ |
+| AWS Bedrock | ✅ |
+
+The provider abstraction allows additional providers to be implemented with minimal effort.
 
 ---
 
-## 🚀 Getting Started
+# Installation
 
-Clone the repository:
+## Standard Installation
 
 ```bash
-git clone <repository-url>
+pip install pyrestkit
+```
+
+---
+
+## Development Installation
+
+```bash
+git clone https://github.com/Raushanraj77/pyrestkit.git
 
 cd pyrestkit
-```
 
-Create a virtual environment:
-
-```bash
 python -m venv .venv
-```
 
-Activate the environment:
-
-### macOS / Linux
-
-```bash
 source .venv/bin/activate
-```
 
-### Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Verify the installation:
-
-```bash
-ruff check .
-
-mypy .
-
-pytest -v
-```
-
-Expected output:
-
-```text
-All checks passed!
-Success: no issues found
-All tests passed
-```
-
-## 🛠️ Development
-
-PyRestKit provides a Makefile to simplify common development tasks.
-
-Clone the repository.
-### Install Development Dependencies
-
-```bash
-make install-dev
-```
-
-This installs all runtime and development dependencies required for linting, type checking, testing, and contributing to PyRestKit.
-
-
-Install development dependencies.
-
-```bash
-make install-dev
-```
-
-Run quality checks.
-
-```bash
-make check
-```
-
-## 🔄 Continuous Integration
-
-PyRestKit uses GitHub Actions to automatically validate every push and pull request.
-
-The CI pipeline performs:
-
-- Ruff (Linting)
-- MyPy (Static Type Checking)
-- Pytest (Unit Testing)
-
-This ensures every change meets the framework's quality standards before being merged.
-
-#### PART 2 ###
-
----
-
-# 📂 Project Structure
-
-```text
-pyrestkit/
-│
-├── pyrestkit/
-│   ├── assertions/
-│   ├── auth/
-│   ├── builder/
-│   ├── clients/
-│   ├── config/
-│   ├── constants/
-│   ├── core/
-│   ├── database/
-│   ├── endpoints/
-│   ├── exceptions/
-│   ├── factories/
-│   ├── hooks/
-│   ├── models/
-│   │   ├── request/
-│   │   └── response/
-│   ├── pipeline/
-│   ├── response/
-│   ├── retry/
-│   ├── serializers/
-│   ├── types/
-│   ├── utils/
-│   └── validators/
-│
-├── schemas/
-├── tests/
-├── docs/
-├── logs/
-├── requirements.txt
-├── pyproject.toml
-├── pytest.ini
-└── README.md
+pip install -e .
 ```
 
 ---
 
-# 🏗 Architecture
-
-The framework follows a layered architecture.
-
-```text
-                Test Cases
-                     │
-                     ▼
-             Business Clients
-                     │
-                     ▼
-          Fluent Request Builder
-                     │
-                     ▼
-               API Client
-                     │
-                     ▼
-          Authentication Layer
-                     │
-                     ▼
-            Request Executor
-                     │
-                     ▼
-               HTTP Session
-                     │
-                     ▼
-                 REST API
-                     │
-                     ▼
-           FrameworkResponse
-                     │
-                     ▼
-    Assertions • Validators • Models
-```
-
-Each layer has a single responsibility, making the framework easy to extend and maintain.
-
----
-
-# ⚙️ Configuration
-
-Framework configuration is managed through `ConfigManager`.
-
-Example:
+## Verify Installation
 
 ```python
-from pyrestkit import ConfigManager
+import pyrestkit
 
-config = ConfigManager("dev")
-```
-
-Example configuration file:
-
-```json
-{
-    "base_url": "https://reqres.in/api",
-    "timeout": 30,
-    "verify_ssl": true,
-    "auto_raise_exceptions": true
-}
-```
-
-You can maintain separate configurations for different environments:
-
-```text
-config/
-├── dev.json
-├── qa.json
-├── stage.json
-└── prod.json
+print(pyrestkit.__version__)
 ```
 
 ---
 
-# 🚀 Creating an API Client
+# Quick Start
 
-Create a reusable API client for your application.
+## Create a Client
 
 ```python
-from pyrestkit import BearerAuth
-from pyrestkit import ConfigManager
 from pyrestkit import APIClient
-from pyrestkit import SessionManager
 
-config = ConfigManager("dev")
-
-session = SessionManager()
-
-auth = BearerAuth(
-    token="your-access-token",
-)
-
-client = APIClient(
-    config=config,
-    session_manager=session,
-    auth_strategy=auth,
-)
+client = APIClient(base_url="https://jsonplaceholder.typicode.com")
 ```
-
-The client is intended to be created once and reused throughout your test suite.
 
 ---
 
-# 🔐 Authentication
+## Send a Request
 
-The framework supports multiple authentication strategies.
+```python
+response = client.get("/posts/1")
+```
+
+---
+
+## Validate Response
+
+```python
+response.validate_status_code(200)
+
+response.validate_json()
+
+response.validate_response_time(max_time_ms=1000)
+```
+
+---
+
+## Read JSON
+
+```python
+data = response.json()
+
+print(data["title"])
+```
+
+---
+
+# Authentication Example
 
 ## Bearer Token
 
 ```python
-from pyrestkit import BearerAuth
+client = APIClient(base_url="https://example.com")
 
-auth = BearerAuth(
-    token="your-token",
-)
+client.authenticate_bearer(token="your-token")
 ```
 
 ---
@@ -480,770 +234,471 @@ auth = BearerAuth(
 ## Basic Authentication
 
 ```python
-from pyrestkit import BasicAuth
-
-auth = BasicAuth(
-    username="admin",
-    password="password",
-)
+client.authenticate_basic(username="admin", password="secret")
 ```
 
 ---
 
-## API Key Authentication
+## API Key
 
 ```python
-from pyrestkit import APIKeyAuth
-
-auth = APIKeyAuth(
-    key="your-api-key",
-    header_name="X-API-Key",
-)
-```
-
-Authentication can be plugged into the API client without changing test code.
-
----
-
-# ✨ Fluent Request Builder
-
-The framework provides a fluent API for constructing requests.
-
-### GET Request
-
-```python
-response = client.request().get("/users").send()
+client.authenticate_api_key(key="xxxxxxxx", header_name="X-API-Key")
 ```
 
 ---
 
-### GET with Query Parameters
+# Configuration Example
+
+Load configuration from YAML.
+
+```yaml
+base_url: https://api.example.com
+
+timeout: 30
+
+headers:
+  Accept: application/json
+```
 
 ```python
-response = (
-    client
-    .request()
-    .get("/users")
-    .query(
-        page=2,
-        per_page=5,
-    )
-    .send()
-)
+from pyrestkit.config import Config
+
+config = Config.from_yaml("config.yaml")
 ```
 
 ---
 
-### POST Request
+# Response Validation
 
 ```python
-response = (
-    client
-    .request()
-    .post("/users")
-    .json({
-        "name": "John",
-        "job": "Engineer",
-    })
-    .send()
-)
+response.validate_status_code(200)
+
+response.validate_header("Content-Type", "application/json")
+
+response.validate_schema("schemas/user.json")
 ```
 
 ---
 
-### Custom Headers
+# AI Failure Analysis
+
+AI analysis can be enabled whenever deeper insight into a failed response is useful.
 
 ```python
-response = (
-    client
-    .request()
-    .get("/users")
-    .header(
-        "X-Request-Id",
-        "12345",
-    )
-    .send()
-)
-```
+from pyrestkit.ai import AIAnalyzer
+from pyrestkit.ai import AIConfig
 
----
+config = AIConfig(provider="openai", model="gpt-4.1-mini", api_key="YOUR_API_KEY")
 
-### Multiple Headers
+analyzer = AIAnalyzer(config)
 
-```python
-response = (
-    client
-    .request()
-    .post("/users")
-    .headers({
-        "X-App": "Demo",
-        "X-Version": "1.0",
-    })
-    .send()
-)
-```
-
----
-
-### Request Timeout
-
-```python
-response = client.request().get("/users").timeout(15).send()
-```
-
----
-
-# 👨‍💼 Business Clients
-
-Business clients encapsulate API endpoints into reusable methods.
-
-Example:
-
-```python
-from pyrestkit import UserClient
-
-user_client = UserClient(client)
-
-response = user_client.list_users()
-```
-
-Retrieve a single user:
-
-```python
-response = user_client.get_user(2)
-```
-
-Create a user:
-
-```python
-from pyrestkit import CreateUserRequest
-
-request = CreateUserRequest(
-    name="John",
-    job="Engineer",
+analysis = analyzer.analyze(
+    request=request,
+    response=response,
 )
 
-response = user_client.create_user(request)
+print(analysis)
 ```
-
-Update a user:
-
-```python
-from pyrestkit import UpdateUserRequest
-
-request = UpdateUserRequest(
-    name="John Updated",
-    job="Senior Engineer",
-)
-
-response = user_client.update_user(
-    2,
-    request,
-)
-```
-
-Delete a user:
-
-```python
-response = user_client.delete_user(2)
-```
-
-Using business clients keeps test cases concise and separates business logic from HTTP implementation details.
-
-### PART 3 ###
-
 ---
 
-# 📦 Response Handling
+# Supported AI Providers
 
-Instead of working directly with `requests.Response`, the framework returns a `FrameworkResponse` object that provides additional functionality while preserving compatibility with the original response.
-
-```python
-response = user_client.get_user(2)
-```
-
----
-
-## Status Code
-
-```python
-assert response.status == 200
-
-# or
-
-assert response.status_code == 200
-```
-
----
-
-## Headers
-
-```python
-print(response.headers)
-
-content_type = response.headers["Content-Type"]
-```
-
----
-
-## Response Time
-
-```python
-print(response.elapsed)
-```
-
----
-
-## Raw Response
-
-Access the original `requests.Response` object whenever needed.
-
-```python
-raw = response.raw
-
-print(raw.cookies)
-print(raw.history)
-```
-
----
-
-## JSON Response
-
-Retrieve the response body as a Python object.
-
-```python
-body = response.json()
-
-print(body)
-```
-
----
-
-# 📄 ResponseBody
-
-`ResponseBody` provides convenient access to JSON responses using dot notation.
-
-Instead of writing:
-
-```python
-response.json()["data"]["email"]
-```
-
-you can simply write:
-
-```python
-response.body.data.email
-```
-
-Example:
-
-```python
-response = user_client.get_user(2)
-
-print(response.body.data.id)
-print(response.body.data.email)
-print(response.body.data.first_name)
-print(response.body.data.last_name)
-```
-
-Lists are also supported.
-
-```python
-users = response.body.data
-
-print(users[0].email)
-print(users[0].first_name)
-```
-
-Convert the response back to a dictionary when needed.
-
-```python
-dictionary = response.body.to_dict()
-```
-
----
-
-# 🧩 Model Serialization
-
-Deserialize API responses into strongly typed Python models.
-
-Example response model:
-
-```python
-@dataclass(slots=True)
-class UserResponse:
-    id: int
-    email: str
-    first_name: str
-    last_name: str
-    avatar: str
-```
-
-Deserialize a single object.
-
-```python
-user = response.as_model(UserResponse)
-
-print(user.email)
-print(user.first_name)
-```
-
-Deserialize a list of objects.
-
-```python
-users = response.as_list(UserResponse)
-
-print(users[0].email)
-```
-
-Using typed models improves readability, IDE auto-completion, and static type checking.
-
----
-
-# ✅ Fluent Assertions
-
-The framework provides expressive assertions that make API tests easier to read.
-
-## Status Code
-
-```python
-response.should.have_status(200)
-```
-
----
-
-## Successful Response
-
-```python
-response.should.be_successful()
-```
-
----
-
-## Header Validation
-
-```python
-response.should.have_header(
-    "Content-Type",
-    "application/json",
-)
-```
-
----
-
-## JSON Value
-
-Validate values using dot notation.
-
-```python
-response.should.have_json(
-    "data.email",
-    "janet@example.com",
-)
-```
-
----
-
-## JSON Array Count
-
-```python
-response.should.have_json_count(
-    "data",
-    6,
-)
-```
-
----
-
-## JSON Contains
-
-```python
-response.should.have_json_contains(
-    "support.text",
-    "ReqRes",
-)
-```
-
----
-
-## Response Time
-
-```python
-response.should.respond_within(1000)
-```
-
-Validates that the response is received within the specified number of milliseconds.
-
----
-
-## Schema Validation
-
-```python
-response.should.match_schema(
-    "schemas/user_schema.json",
-)
-```
-
-This validates the response against a JSON Schema and raises an exception if the response structure does not match the schema.
-
----
-
-# 📋 Validators
-
-The framework also provides standalone validators for situations where assertions are not required.
-
-## Response Validator
-
-```python
-from pyrestkit import ResponseValidator
-
-ResponseValidator.validate_status(
-    response,
-    200,
-)
-```
-
----
-
-## JSON Schema Validator
-
-```python
-from pyrestkit import SchemaValidator
-
-SchemaValidator.validate(
-    response,
-    "schemas/user_schema.json",
-)
-```
-
-These validators can be used independently in utility functions, pipelines, or custom test frameworks.
-
----
-
-# 🏭 Test Data Factories
-
-Factories simplify the creation of reusable test data.
-
-Example:
-
-```python
-from pyrestkit import UserFactory
-
-request = UserFactory.random()
-```
-
-Create predefined users.
-
-```python
-admin = UserFactory.admin()
-
-guest = UserFactory.guest()
-```
-
-Factories help eliminate duplicated request payloads and keep tests concise.
-
----
-
-# 🔄 Retry Support
-
-Retry policies improve reliability when interacting with unstable services.
-
-Example:
-
-```python
-retry_handler = RetryHandler(
-    max_retries=3,
-    delay=2,
-)
-```
-
-Typical retry scenarios include:
-
-* Temporary network failures
-* HTTP 5xx responses
-* Rate limiting
-* Service warm-up periods
-
----
-
-# 🪝 Hooks
-
-Hooks allow custom logic to be executed during request processing.
-
-Available hook points:
-
-* Before Request
-* After Response
-
-Example:
-
-```python
-hook_manager.before_request(...)
-
-hook_manager.after_response(...)
-```
-
-Typical use cases include:
-
-* Logging
-* Reporting
-* Metrics
-* Custom authentication
-* Request modification
-* Response auditing
-
----
-
-# 🧪 Running Tests
-
-Run the complete quality suite before committing changes.
-
-```bash
-ruff check .
-
-mypy .
-
-pytest -v
-```
-
-Expected output:
+PyRestKit uses a provider abstraction layer that allows switching AI providers
+without changing your test code.
 
 ```text
-All checks passed!
-
-Success: no issues found
-
-===================== test session starts =====================
-
-...
-
-===================== 100% passed =====================
+                    AI Analyzer
+                         │
+                         ▼
+                 Provider Factory
+                         │
+        ┌────────────────┼────────────────┐
+        ▼                ▼                ▼
+     OpenAI         Anthropic        Gemini
+        │                │                │
+        ▼                ▼                ▼
+      Groq           Cohere         Azure OpenAI
+        │
+        ▼
+     Mistral
+        │
+        ▼
+     Ollama
+        │
+        ▼
+    AWS Bedrock
 ```
 
-The project follows strict quality gates:
-
-* Ruff for linting
-* MyPy for static type checking
-* Pytest for automated testing
-
-### PART 4 ###
-
----
-
-# 🎯 Design Principles
-
-The framework is built around a few core principles.
-
-### Readability First
-
-Tests should be easy to read and understand.
+Every provider implements the same interface.
 
 ```python
-response.should.have_status(200)
+class BaseAIProvider:
+    def complete(
+        self,
+        prompt: str,
+        *,
+        config: AIConfig,
+        system_prompt: str | None = None,
+    ) -> str: ...
 ```
 
-is much easier to understand than multiple low-level assertions.
+This makes it easy to:
+
+- switch providers
+- test providers
+- implement custom providers
+- support enterprise LLMs
 
 ---
 
-### Strong Typing
+# Project Structure
 
-The framework embraces Python type hints to provide:
-
-* Better IDE support
-* Static analysis with MyPy
-* Safer refactoring
-* Improved developer experience
-
----
-
-### Clean Architecture
-
-Each component has a single responsibility.
-
+```text
+pyrestkit/
+│
+├── pyrestkit/
+│   │
+│   ├── auth/
+│   ├── client/
+│   ├── config/
+│   ├── exceptions/
+│   ├── logging/
+│   ├── retry/
+│   ├── validators/
+│   │
+│   ├── ai/
+│   │   ├── analyzer.py
+│   │   ├── config.py
+│   │   ├── exceptions.py
+│   │   ├── factory.py
+│   │   ├── prompt_loader.py
+│   │   ├── prompts/
+│   │   └── providers/
+│   │
+│   └── ...
+│
+├── docs/
+├── examples/
+├── tests/
+├── pyproject.toml
+└── README.md
 ```
-Configuration
-        │
-Authentication
-        │
-HTTP Client
-        │
-Request Builder
-        │
-Business Client
-        │
-Response Wrapper
-        │
-Assertions & Validators
+
+---
+
+# Framework Architecture
+
+```text
+                 Test
+
+                  │
+
+                  ▼
+
+            API Client
+
+                  │
+
+                  ▼
+
+        Authentication Layer
+
+                  │
+
+                  ▼
+
+           HTTP Transport
+
+                  │
+
+                  ▼
+
+            API Response
+
+                  │
+
+       ┌──────────┴──────────┐
+
+       ▼                     ▼
+
+ Validation             AI Analysis
+
+       │                     │
+
+       ▼                     ▼
+
+ Assertions          Root Cause Analysis
 ```
 
-This makes the framework modular and easy to extend.
+---
+
+# Why AI Is Optional
+
+PyRestKit is designed as an API automation framework first.
+
+AI is an optional capability.
+
+This provides several advantages:
+
+- no AI dependency for normal users
+- predictable execution
+- no external API calls unless enabled
+- works in offline environments
+- enterprise friendly
+- easier testing
+
+If AI is never configured, PyRestKit behaves exactly like a traditional API
+automation framework.
 
 ---
 
-### Reusability
+# Extending PyRestKit
 
-Common functionality is centralized into reusable components such as:
+Creating a custom AI provider requires implementing a single interface.
 
-* Business Clients
-* Validators
-* Assertions
-* Factories
-* Authentication Strategies
-* Hooks
-* Retry Policies
+```python
+from pyrestkit.ai.providers.base import BaseAIProvider
 
----
 
-# 📈 Roadmap
+class InternalProvider(BaseAIProvider):
+    def complete(
+        self,
+        prompt: str,
+        *,
+        config,
+        system_prompt=None,
+    ) -> str:
 
-The following features are planned for future releases.
+        ...
 
-## Version 1.1
+        return result
+```
 
-* Async API Client (`httpx`)
-* OAuth2 Authentication
-* Cookie Authentication
-* Multipart File Upload Support
-* Enhanced Logging
+Register the provider.
 
----
+```python
+factory.register(
+    "internal",
+    InternalProvider,
+)
+```
 
-## Version 1.2
-
-* GraphQL Client
-* XML Response Support
-* XML Assertions
-* XML Schema Validation
+Now it can be used exactly like built-in providers.
 
 ---
 
-## Version 2.0
+# Example Workflow
 
-* OpenAPI / Swagger Client Generation
-* Allure Reporting Integration
-* HTML Reporting
-* Parallel Execution Utilities
-* Plugin System
-* CLI Support
+```python
+response = client.post(
+    "/users",
+    json=payload,
+)
+
+response.validate_status_code(201)
+
+response.validate_schema("schemas/user.json")
+```
+
+If validation fails:
+
+```python
+analysis = analyzer.analyze(
+    request=request,
+    response=response,
+)
+
+print(analysis)
+```
+
+Example output:
+
+```text
+Status Code Mismatch
+
+Expected:
+201
+
+Received:
+400
+
+Likely Cause
+
+The "email" field is required but missing
+from the request payload.
+
+Suggested Fix
+
+Include a valid email address before
+submitting the request.
+```
 
 ---
 
-# 🤝 Contributing
+# Documentation
 
-Contributions are welcome!
+Detailed documentation is available in the `docs` directory.
 
-If you would like to improve the project:
+| Document | Description |
+|----------|-------------|
+| getting-started.md | Installation and first project |
+| architecture.md | Internal framework architecture |
+| configuration.md | Configuration system |
+| authentication.md | Authentication mechanisms |
+| validation.md | Validators and assertions |
+| ai.md | AI-assisted failure analysis |
+| providers.md | AI provider implementations |
+| examples.md | Complete usage examples |
+| faq.md | Frequently asked questions |
+| roadmap.md | Future development plans |
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Make your changes.
-4. Ensure all quality checks pass.
-5. Submit a Pull Request.
+---
 
-Before submitting code, please run:
+# Running Tests
+
+Run all tests.
+
+```bash
+pytest
+```
+
+Run with coverage.
+
+```bash
+pytest --cov=pyrestkit
+```
+
+Run Ruff.
 
 ```bash
 ruff check .
+```
 
+Run MyPy.
+
+```bash
 mypy .
-
-pytest -v
 ```
 
-Every contribution should maintain the project's coding standards and test coverage.
+Build package.
 
----
-
-# 🏷 Versioning
-
-This project follows **Semantic Versioning (SemVer)**.
-
-```
-MAJOR.MINOR.PATCH
+```bash
+python -m build
 ```
 
-Examples:
+---
 
-```
-1.0.0
-1.1.0
-1.1.1
-2.0.0
-```
+# Contributing
 
-* **MAJOR** – Breaking API changes
-* **MINOR** – New backward-compatible features
-* **PATCH** – Bug fixes and small improvements
+Contributions are welcome.
+
+Please read:
+
+- CONTRIBUTING.md
+- CODE_OF_CONDUCT.md
+
+before submitting pull requests.
 
 ---
 
-# 📄 License
+# Roadmap
 
-This project is licensed under the MIT License.
+## Version 1.x
 
-You are free to use, modify, and distribute this software in accordance with the terms of the license.
+- REST API Client
+- Authentication
+- Validation
+- Assertions
+- Retry
+- Configuration
+- Logging
+- AI Failure Analysis
+- Multiple AI Providers
 
----
+## Version 2.x
 
-# 🙏 Acknowledgements
+Planned improvements include:
 
-This framework is built using several excellent open-source Python libraries.
-
-* Requests
-* Pytest
-* Requests-Mock
-* JSONSchema
-* MyPy
-* Ruff
-
-A big thank you to the maintainers and contributors of these projects.
-
----
-
-# ⭐ Support
-
-If you find this project useful:
-
-* ⭐ Star the repository
-* 🐞 Report bugs
-* 💡 Suggest new features
-* 🤝 Contribute improvements
-
-Your feedback helps improve the framework.
+- Async HTTP Client
+- HTML Reporting
+- OpenAPI Integration
+- AI Test Generation
+- AI Assertion Suggestions
+- Plugin System
+- CLI
+- VS Code Extension
 
 ---
 
-# 📬 Contact
+# Why PyRestKit?
 
-If you have questions, suggestions, or ideas for improvement, feel free to open an issue or start a discussion in the repository.
+PyRestKit aims to provide a clean, extensible, and modern approach to REST API automation.
+
+Core principles:
+
+- Simplicity
+- Type Safety
+- Extensibility
+- Clean Architecture
+- Optional AI
+- Developer Experience
 
 ---
 
-# 🎉 Conclusion
+# Requirements
 
-Python API Automation Framework is designed to provide a clean, scalable, and maintainable approach to REST API automation.
+- Python 3.10+
+- requests
+- pydantic
+- jsonschema
+- PyYAML
 
-By combining:
+Optional:
 
-* Fluent APIs
-* Strong typing
-* Business-layer clients
-* Rich response handling
-* Fluent assertions
-* Schema validation
-* Authentication strategies
-* Retry mechanisms
-* Hook support
-* Test data factories
+- OpenAI
+- Anthropic
+- Gemini
+- Azure OpenAI
+- Groq
+- Cohere
+- Mistral
+- Ollama
+- AWS Bedrock
 
-the framework helps teams write expressive, reliable, and maintainable API tests while following modern Python best practices.
+---
 
-Happy Testing! 🚀
+# License
 
-## 📄 Project Resources
+PyRestKit is licensed under the MIT License.
 
-- 📘 README – Project documentation
-- 📝 CHANGELOG – Release history
-- 🤝 CONTRIBUTING – Contribution guidelines
-- 📜 LICENSE – Project license
+See the LICENSE file for details.
+
+---
+
+# Support
+
+If you encounter an issue:
+
+- Open a GitHub Issue
+- Start a GitHub Discussion
+- Submit a Pull Request
+
+---
+
+# Acknowledgements
+
+PyRestKit is inspired by the design philosophies of several outstanding open-source projects, including:
+
+- Requests
+- HTTPX
+- FastAPI
+- Pydantic
+- Playwright
+
+while focusing specifically on delivering a modern, extensible framework for REST API automation.
+
+---
+
+## Star the Project ⭐
+
+If PyRestKit helps your team build reliable API automation, consider starring the repository to support the project and stay updated with future releases.

@@ -3,4 +3,6 @@ class APIException(Exception):
     Base exception for the API automation framework.
     """
 
-    pass
+    def __init__(self, message: str = "") -> None:
+        super().__init__(message)
+        self.message = message

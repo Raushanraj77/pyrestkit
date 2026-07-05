@@ -6,4 +6,5 @@ class ValidationException(APIException):
     Raised when response validation fails.
     """
 
-    pass
+    def __init__(self, message: str = "Validation failed.") -> None:
+        super().__init__(message)

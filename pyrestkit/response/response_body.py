@@ -115,6 +115,8 @@ class ResponseBody:
 
         for part in path.split("."):
             if isinstance(current, dict):
+                if part not in current:
+                    raise AttributeError(f"Field '{path}' not found.")
                 current = current[part]
             else:
                 raise AttributeError(f"Field '{path}' not found.")

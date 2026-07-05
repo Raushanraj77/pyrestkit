@@ -7,12 +7,55 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 import requests
 
+from pyrestkit.ai.analyzer import FailureAnalyzer
+from pyrestkit.ai.client import AIClient
+from pyrestkit.ai.config import AIConfig
+from pyrestkit.ai.exceptions import AIConfigurationError
+from pyrestkit.ai.models import FailureAnalysis, FailureContext
 from pyrestkit.response.response_body import ResponseBody
 
 if TYPE_CHECKING:
     from pyrestkit.assertions.response_assertions import ResponseAssertions
 
 T = TypeVar("T")
+
+
+class ResponseAIHelper:
+    """
+    Optional AI helper attached to a FrameworkResponse.
+
+    It is lazy-loaded and degrades gracefully by raising a framework-specific
+    configuration error when no AI client is configured.
+    """
+
+    def __init__(self, response: FrameworkResponse) -> None:
+        self._response = response
+
+    def explain_failure(
+        self,
+        *,
+        client: AIClient | None = None,
+        config: AIConfig | None = None,
+        prompt_loader: Any | None = None,
+    ) -> FailureAnalysis:
+        if client is None:
+            if config is None:
+                raise AIConfigurationError("AI is not configured.")
+
+            client = AIClient(config=config)
+
+        analyzer = FailureAnalyzer(client, prompt_loader=prompt_loader)
+        context = FailureContext(
+            test_name="response_failure",
+            error_type="HTTPError",
+            error_message=self._response._response.reason,
+            request_method=None,
+            request_url=str(self._response._response.url or ""),
+            response_status=self._response.status,
+            response_body=self._response.text,
+        )
+
+        return analyzer.analyze(context)
 
 
 class FrameworkResponse:
@@ -29,6 +72,7 @@ class FrameworkResponse:
     ) -> None:
         self._response = response
         self._body: ResponseBody | None = None
+        self._ai_helper: ResponseAIHelper | None = None
 
     @property
     def raw(
@@ -63,6 +107,15 @@ class FrameworkResponse:
         self,
     ) -> Mapping[str, str]:
         return self._response.headers
+
+    @property
+    def ai(
+        self,
+    ) -> ResponseAIHelper:
+        if self._ai_helper is None:
+            self._ai_helper = ResponseAIHelper(self)
+
+        return self._ai_helper
 
     @property
     def text(

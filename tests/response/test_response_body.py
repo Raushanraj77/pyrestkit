@@ -69,3 +69,16 @@ def test_iteration() -> None:
     ids = [item.id for item in body]
 
     assert ids == [1, 2]
+
+
+def test_response_body_get_supports_nested_paths() -> None:
+    body = ResponseBody({"data": {"user": {"name": "Ada"}}})
+
+    assert body.get("data.user.name") == "Ada"
+
+
+def test_response_body_get_raises_for_missing_path() -> None:
+    body = ResponseBody({"data": {"user": {"name": "Ada"}}})
+
+    with pytest.raises(AttributeError, match="Field 'data.user.email' not found"):
+        body.get("data.user.email")

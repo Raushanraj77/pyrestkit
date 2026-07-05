@@ -6,4 +6,5 @@ class ConfigurationException(APIException):
     Raised when configuration is invalid.
     """
 
-    pass
+    def __init__(self, message: str = "Configuration is invalid.") -> None:
+        super().__init__(message)

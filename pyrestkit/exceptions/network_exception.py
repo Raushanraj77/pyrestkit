@@ -6,4 +6,5 @@ class NetworkException(APIException):
     Raised for network related failures.
     """
 
-    pass
+    def __init__(self, message: str = "Network error occurred.") -> None:
+        super().__init__(message)
