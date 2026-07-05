@@ -6,7 +6,7 @@
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
 [![PyPI](https://img.shields.io/pypi/v/pyrestkit.svg)](https://pypi.org/project/pyrestkit/)
 [![License](https://img.shields.io/github/license/Raushanraj77/pyrestkit)](LICENSE)
-[![Tests](https://github.com/Raushanraj77/pyrestkit/actions/workflows/tests.yml/badge.svg)](https://github.com/Raushanraj77/pyrestkit/actions)
+[![Tests](https://github.com/Raushanraj77/pyrestkit/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Raushanraj77/pyrestkit/actions/workflows/ci.yml)
 [![Code Style](https://img.shields.io/badge/code%20style-ruff-black)](https://docs.astral.sh/ruff/)
 [![Type Checked](https://img.shields.io/badge/type%20checked-mypy-blue)](https://mypy-lang.org/)
 
