@@ -4,6 +4,8 @@ PyRestKit
 Modern Python REST API Automation Toolkit.
 """
 
+from importlib.metadata import PackageNotFoundError, version
+
 from pyrestkit.auth.strategies.api_key_auth import ApiKeyAuth
 from pyrestkit.auth.strategies.basic_auth import BasicAuth
 from pyrestkit.auth.strategies.bearer_auth import BearerAuth
@@ -17,7 +19,10 @@ from pyrestkit.models.request.update_user_request import UpdateUserRequest
 from pyrestkit.validators.response_validator import ResponseValidator
 from pyrestkit.validators.schema_validator import SchemaValidator
 
-__version__ = "1.2.0"
+try:
+    __version__ = version("pyrestkit")
+except PackageNotFoundError:
+    __version__ = "0.0.0"
 
 __all__ = [
     "APIClient",
